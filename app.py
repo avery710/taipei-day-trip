@@ -36,81 +36,82 @@ def search_attractions():
 		connection = cnx_pool.get_connection()
 		my_cursor = connection.cursor(dictionary=True)
 
-		if not my_cursor:
-			error_message = {
-				"error": True,
-				"message": "伺服器內部錯誤"
-			}
-			return jsonify(error_message), 500
+		keyword = request.args.get('keyword')
+		cur_page = int(request.args.get('page'))
+
+		result_dict = {}
+
+		if not keyword:
+			select_data = (
+				"SELECT * FROM attractions"
+			)
+			my_cursor.execute(select_data)
+			datas = my_cursor.fetchall()
 
 		else:
-			keyword = request.args.get('keyword')
-			cur_page = int(request.args.get('page'))
-
-			result_dict = {}
-
-			if not keyword:
-				select_data = (
-					"SELECT * FROM attractions"
-				)
-				my_cursor.execute(select_data)
-				datas = my_cursor.fetchall()
-
-			else:
-				query_keyword = (
-					"SELECT * FROM attractions "
-					"WHERE category = %s OR name LIKE CONCAT('%', %s, '%')"
-				)
-				my_cursor.execute(query_keyword, (keyword, keyword))
-				datas = my_cursor.fetchall()
-
-			# if no according keyword, return the empty json file
-			if not datas:
-				result_dict = {
-					"nextPage": None,
-					"data": []
-				}
-				return jsonify(result_dict), 200	
-
-			# select image query
-			select_images = (
-				"SELECT img_url FROM images "
-				"WHERE attraction_id = %s"
+			query_keyword = (
+				"SELECT * FROM attractions "
+				"WHERE category = %s OR name LIKE CONCAT('%', %s, '%')"
 			)
+			my_cursor.execute(query_keyword, (keyword, keyword))
+			datas = my_cursor.fetchall()
 
-			# add images to datas
-			for data in datas:
-				my_cursor.execute(select_images, (data['id'],))
-				images = my_cursor.fetchall()
+		# if no according keyword, return the empty json file
+		if not datas:
+			result_dict = {
+				"nextPage": None,
+				"data": []
+			}
+			return jsonify(result_dict), 200	
 
-				img_list = []
-				for image in images:
-					for val in image.values():
-						img_list.append(val)
+		# select image query
+		select_images = (
+			"SELECT img_url FROM images "
+			"WHERE attraction_id = %s"
+		)
 
-				data['images'] = img_list
-			
-			pages = float(len(datas)) / float(12)
-			total_page = math.ceil(pages)
+		# add images to datas
+		for data in datas:
+			my_cursor.execute(select_images, (data['id'],))
+			images = my_cursor.fetchall()
 
-			# current page is not the last
-			if cur_page < total_page - 1:
-				result_dict['nextPage'] = cur_page + 1
+			img_list = []
+			for image in images:
+				for val in image.values():
+					img_list.append(val)
 
-				tmp = []
-				for data in datas[cur_page * 12 : (cur_page + 1) * 12]:
-					tmp.append(data)
-			# current page is the last
-			elif cur_page == total_page - 1:
-				result_dict['nextPage'] = None
+			data['images'] = img_list
+		
+		pages = float(len(datas)) / float(12)
+		total_page = math.ceil(pages)
 
-				tmp = []
-				for data in datas[cur_page * 12 : len(datas)]:
-					tmp.append(data)
+		# current page is not the last
+		if cur_page < total_page - 1:
+			result_dict['nextPage'] = cur_page + 1
 
-			result_dict['data'] = tmp
+			tmp = []
+			for data in datas[cur_page * 12 : (cur_page + 1) * 12]:
+				tmp.append(data)
+		# current page is the last
+		elif cur_page == total_page - 1:
+			result_dict['nextPage'] = None
 
-			return jsonify(result_dict), 200
+			tmp = []
+			for data in datas[cur_page * 12 : len(datas)]:
+				tmp.append(data)
+
+		result_dict['data'] = tmp
+
+		return jsonify(result_dict), 200
+
+
+	except:
+		error_message = {
+			"error": True,
+			"message": "伺服器內部錯誤"
+		}
+		return jsonify(error_message), 500
+
 
 	finally:
 		if connection.is_connected():
@@ -124,49 +125,51 @@ def attraction_detail(id):
 		connection = cnx_pool.get_connection()
 		my_cursor = connection.cursor(dictionary=True)
 
-		if not my_cursor:
+		# select from "attractions" table
+		select_data = (
+			"SELECT id, name, category, description, address, transport, mrt, lat, lng "
+			"FROM attractions "
+			"WHERE id = %s"
+		)
+		my_cursor.execute(select_data, (id,))
+		tmp_dict = my_cursor.fetchone() # store as dict
+
+		if not tmp_dict:
 			error_message = {
 				"error": True,
-				"message": "伺服器內部錯誤"
+				"message": "景點編號不正確"
 			}
-			return jsonify(error_message), 500
+			return jsonify(error_message), 400
 		else:
-			# select from "attractions" table
-			select_data = (
-				"SELECT id, name, category, description, address, transport, mrt, lat, lng "
-				"FROM attractions "
-				"WHERE id = %s"
+			# select from "images" table and append in "datas" dict
+			select_images = (
+				"SELECT img_url "
+				"FROM images "
+				"WHERE attraction_id = %s"
 			)
-			my_cursor.execute(select_data, (id,))
-			tmp_dict = my_cursor.fetchone() # store as dict
+			my_cursor.execute(select_images, (id,))
+			images = my_cursor.fetchall()
 
-			if not tmp_dict:
-				error_message = {
-					"error": True,
-					"message": "景點編號不正確"
-				}
-				return jsonify(error_message), 400
-			else:
-				# select from "images" table and append in "datas" dict
-				select_images = (
-					"SELECT img_url "
-					"FROM images "
-					"WHERE attraction_id = %s"
-				)
-				my_cursor.execute(select_images, (id,))
-				images = my_cursor.fetchall()
+			result = []
+			for image in images:
+				for val in image.values():
+					result.append(val)
+			
+			tmp_dict['images'] = result
 
-				result = []
-				for image in images:
-					for val in image.values():
-						result.append(val)
-				
-				tmp_dict['images'] = result
+			result_dict = {}
+			result_dict['data'] = tmp_dict
+			
+			return jsonify(result_dict), 200
 
-				result_dict = {}
-				result_dict['data'] = tmp_dict
-				
-				return jsonify(result_dict), 200
+
+	except:
+		error_message = {
+			"error": True,
+			"message": "伺服器內部錯誤"
+		}
+		return jsonify(error_message), 500
+
 
 	finally:
 		if connection.is_connected():
@@ -180,28 +183,30 @@ def attraction_categories():
 		connection = cnx_pool.get_connection()
 		my_cursor = connection.cursor()
 
-		if not my_cursor:
-			error_message = {
-				"error": True,
-				"message": "伺服器內部錯誤"
-			}
-			return jsonify(error_message), 500
-		else:
-			cat_query = (
-				"SELECT category FROM attractions"
-			)
-			my_cursor.execute(cat_query)
-			tmp_list = list(set(my_cursor.fetchall()))
-			
-			result_list = []
-			# convert tuple into pure string
-			for item in tmp_list:
-				result_list.append(item[0])
+		cat_query = (
+			"SELECT category FROM attractions"
+		)
+		my_cursor.execute(cat_query)
+		tmp_list = list(set(my_cursor.fetchall()))
+		
+		result_list = []
+		# convert tuple into pure string
+		for item in tmp_list:
+			result_list.append(item[0])
 
-			result_dict = {}
-			result_dict['data'] = result_list
+		result_dict = {}
+		result_dict['data'] = result_list
 
-			return jsonify(result_dict), 200
+		return jsonify(result_dict), 200
+
+
+	except:
+		error_message = {
+			"error": True,
+			"message": "伺服器內部錯誤"
+		}
+		return jsonify(error_message), 500
+		
 
 	finally:
 		if connection.is_connected():
