@@ -11,17 +11,17 @@ app.config["TEMPLATES_AUTO_RELOAD"]=True
 
 # mysql connection pool configure
 dbconfig = {
-    "host" : "localhost",
-    "user" : "root",
-    "password" : "angeldemima0710",
-    "database" : "taipei_trip"
+	"host" : "localhost",
+	"user" : "root",
+	"password" : "Averydemima0710!",
+	"database" : "taipei_trip"
 }
 
 cnx_pool = mysql.connector.pooling.MySQLConnectionPool(
-    pool_name = "mysql_pool",
-    pool_size = 5,
-    autocommit = True,
-    **dbconfig
+	pool_name = "mysql_pool",
+	pool_size = 5,
+	autocommit = True,
+	**dbconfig
 )
 
 
@@ -223,4 +223,6 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
-app.run(port=3000, host="0.0.0.0")
+if __name__ == '__main__':
+    app.run(port=3000, host="0.0.0.0")
+	print()
