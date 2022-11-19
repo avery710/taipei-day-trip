@@ -1,7 +1,6 @@
 from flask import *
 import mysql.connector
 import mysql.connector.pooling
-import math
 
 
 app=Flask(__name__)
@@ -44,17 +43,19 @@ def search_attractions():
 
 		if not keyword:
 			select_data = (
-				"SELECT * FROM attractions"
+				"SELECT * FROM attractions "
+				"ORDER BY id LIMIT 13 OFFSET %s"
 			)
-			my_cursor.execute(select_data)
+			my_cursor.execute(select_data, (cur_page * 12,))
 			datas = my_cursor.fetchall()
 
 		else:
 			query_keyword = (
 				"SELECT * FROM attractions "
-				"WHERE category = %s OR name LIKE CONCAT('%', %s, '%')"
+				"WHERE category = %s OR name LIKE CONCAT('%', %s, '%') "
+				"ORDER BY id LIMIT 13 OFFSET %s"
 			)
-			my_cursor.execute(query_keyword, (keyword, keyword))
+			my_cursor.execute(query_keyword, (keyword, keyword, cur_page * 12))
 			datas = my_cursor.fetchall()
 
 		# if no according keyword, return the empty json file
@@ -82,23 +83,18 @@ def search_attractions():
 					img_list.append(val)
 
 			data['images'] = img_list
-		
-		pages = float(len(datas)) / float(12)
-		total_page = math.ceil(pages)
 
-		# current page is not the last
-		if cur_page < total_page - 1:
+		if len(datas) == 13:
 			result_dict['nextPage'] = cur_page + 1
 
 			tmp = []
-			for data in datas[cur_page * 12 : (cur_page + 1) * 12]:
+			for data in datas[0 : 12]:
 				tmp.append(data)
-		# current page is the last
-		elif cur_page == total_page - 1:
+		elif len(datas) < 13:
 			result_dict['nextPage'] = None
 
 			tmp = []
-			for data in datas[cur_page * 12 : len(datas)]:
+			for data in datas[0 : len(datas)]:
 				tmp.append(data)
 
 		result_dict['data'] = tmp
