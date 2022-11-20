@@ -39,21 +39,22 @@ def search_attractions():
 		keyword = request.args.get('keyword')
 		cur_page = int(request.args.get('page'))
 
-		result_dict = {}
-
 		if not keyword:
 			select_data = (
-				"SELECT * FROM attractions "
-				"ORDER BY id LIMIT 13 OFFSET %s"
+				"SELECT attractions.*, GROUP_CONCAT(images.img_url) AS images FROM attractions "
+				"INNER JOIN images ON attractions.id = images.attraction_id "
+				"GROUP BY attractions.id "
+				"LIMIT 13 OFFSET %s"
 			)
 			my_cursor.execute(select_data, (cur_page * 12,))
 			datas = my_cursor.fetchall()
-
 		else:
 			query_keyword = (
-				"SELECT * FROM attractions "
+				"SELECT attractions.*, GROUP_CONCAT(images.img_url) AS images FROM attractions "
+				"INNER JOIN images ON attractions.id = images.attraction_id "
 				"WHERE category = %s OR name LIKE CONCAT('%', %s, '%') "
-				"ORDER BY id LIMIT 13 OFFSET %s"
+				"GROUP BY attractions.id "
+				"LIMIT 13 OFFSET %s"
 			)
 			my_cursor.execute(query_keyword, (keyword, keyword, cur_page * 12))
 			datas = my_cursor.fetchall()
@@ -66,38 +67,18 @@ def search_attractions():
 			}
 			return jsonify(result_dict), 200	
 
-		# select image query
-		select_images = (
-			"SELECT img_url FROM images "
-			"WHERE attraction_id = %s"
-		)
-
-		# add images to datas
 		for data in datas:
-			my_cursor.execute(select_images, (data['id'],))
-			images = my_cursor.fetchall()
+			data['images'] = data['images'].split(',')
 
-			img_list = []
-			for image in images:
-				for val in image.values():
-					img_list.append(val)
-
-			data['images'] = img_list
-
+		result_dict = {}
 		if len(datas) == 13:
 			result_dict['nextPage'] = cur_page + 1
-
-			tmp = []
-			for data in datas[0 : 12]:
-				tmp.append(data)
+			datas.pop()
 		elif len(datas) < 13:
 			result_dict['nextPage'] = None
 
-			tmp = []
-			for data in datas[0 : len(datas)]:
-				tmp.append(data)
 
-		result_dict['data'] = tmp
+		result_dict['data'] = datas
 
 		return jsonify(result_dict), 200
 
@@ -124,40 +105,26 @@ def attraction_detail(id):
 
 		# select from "attractions" table
 		select_data = (
-			"SELECT id, name, category, description, address, transport, mrt, lat, lng "
-			"FROM attractions "
-			"WHERE id = %s"
+			"SELECT attractions.*, GROUP_CONCAT(images.img_url) AS images FROM attractions "
+			"INNER JOIN images ON attractions.id = images.attraction_id "
+			"WHERE attractions.id = %s "
 		)
 		my_cursor.execute(select_data, (id,))
-		tmp_dict = my_cursor.fetchone() # store as dict
-
-		if not tmp_dict:
+		data = my_cursor.fetchone()
+		
+		if data['id'] == None:
 			error_message = {
 				"error": True,
 				"message": "景點編號不正確"
 			}
 			return jsonify(error_message), 400
-		else:
-			# select from "images" table and append in "datas" dict
-			select_images = (
-				"SELECT img_url "
-				"FROM images "
-				"WHERE attraction_id = %s"
-			)
-			my_cursor.execute(select_images, (id,))
-			images = my_cursor.fetchall()
 
-			result = []
-			for image in images:
-				for val in image.values():
-					result.append(val)
-			
-			tmp_dict['images'] = result
+		data['images'] = data['images'].split(',')
 
-			result_dict = {}
-			result_dict['data'] = tmp_dict
-			
-			return jsonify(result_dict), 200
+		result_dict = {}
+		result_dict['data'] = data
+		
+		return jsonify(result_dict), 200
 
 
 	except:
