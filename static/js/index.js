@@ -139,14 +139,15 @@ search_bar.addEventListener('submit', event => {
     fetch(`${root_url}api/attractions?page=0&keyword=${keyword}`)
     .then(res => res.json())
     .then(data => {
+        let grid_section = document.querySelector('.grid-container')
+
         // remove old grids
         let old_grids = document.querySelectorAll('.per-grid')
         old_grids.forEach(old_grid => old_grid.remove())
+        grid_section.innerHTML = null
 
         const attractions = data['data']
         next_page = data['nextPage']
-
-        let grid_section = document.querySelector('.grid-container')
 
         if (attractions.length === 0){
             grid_section.innerHTML = "查無此景點"
