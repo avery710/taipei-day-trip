@@ -12,7 +12,7 @@ app.config["TEMPLATES_AUTO_RELOAD"]=True
 dbconfig = {
 	"host" : "localhost",
 	"user" : "root",
-	"password" : "Averydemima0710!",
+	"password" : "Angeldemima0710!",
 	"database" : "taipei_trip"
 }
 
