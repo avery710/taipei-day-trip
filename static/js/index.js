@@ -2,6 +2,7 @@ const root_url = "http://52.69.53.123:3000/"
 // const root_url = "http://127.0.0.1:3000/"
 let next_page = null
 let keyword = ""
+let isLoading = false
 
 let input_field = document.getElementById('input-field')
 let category = document.getElementById('category')
@@ -170,24 +171,27 @@ const options = {
 const callback = (entries, observer) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            if (next_page != null){
+            if (next_page != null && isLoading == false){
+                isLoading = true
+
                 fetch(`${root_url}api/attractions?page=${next_page}&keyword=${keyword}`)
                 .then(res => res.json())
                 .then(data => {
                     const attractions = data['data']
-                    console.log(attractions)
-
+                    
+                    console.log(next_page)
                     next_page = data['nextPage']
     
                     let grid_section = document.querySelector('.grid-container')
     
                     attractions.forEach(attraction => {
                         add_grid(grid_section, attraction)
-                    });
-    
+                    })
                 }).catch(error => {
                     console.log(`error: ${error}`)
                 })
+
+                isLoading = false
             }
         }
     })
