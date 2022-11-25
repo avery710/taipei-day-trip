@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <title>台北一日遊</title>
+</head>
+<body>
+    <div id="navigation">
+        <div id="nav-container">
+            <div id="nav-left">
+                台北一日遊
+            </div>
+
+            <div id="nav-right">
+                <button class="nav-button">預定行程</button>
+                <button class="nav-button">登入/註冊</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="welcome">
+        <div id="wel-container">
+            <div id="slogan-1">
+                <div>輕鬆享受台北一日悠閒</div>
+            </div>
+
+            <div id="slogan-2">
+                <div>探索每個角落，體驗城市的深度旅遊行程</div>
+            </div>
+            
+            <form id="search-bar" autocomplete="off">
+                <input type="text" placeholder="輸入景點名稱查詢" name="keyword" id="input-field">
+                <button type="submit"><img src="{{ url_for('static', filename='img/icon_search.png') }}"></button>
+            </form>
+                
+            <div id="category"></div>
+        </div>
+
+        <div id="hero-image">
+            <img src="{{ url_for('static', filename='img/welcome.png') }}">
+        </div>
+    </div>
+    
+
+    <div class="attractions">
+        <div class="grid-container">
+        </div>
+    </div>
+
+    <div class="footer">
+        <div id="footer-content">COPYRIGHT &#169; 2021 台北一日遊</div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>
