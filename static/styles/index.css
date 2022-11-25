@@ -220,6 +220,7 @@ body {
     position: relative;
     width: 100%;
     overflow: hidden;
+    aspect-ratio: 4/3;
 }
 
 .grid-img {
@@ -298,30 +299,16 @@ body {
     .grid-container {
         grid-template-columns: 1fr;
     }
-
-    .grid-pic-section {
-        max-height: 235px;
-    }
 }
 
 @media (min-width: 600px) and (max-width: 1200px) {
     .grid-container {
         grid-template-columns: repeat(2, 1fr);
     }
-
-    .grid-pic-section {
-        height: 50vw;
-        max-height: 210px;
-    }
 }
 
 @media (min-width: 1200px) and (max-width: 1920px) {
     .grid-container {
         grid-template-columns: repeat(4, 1fr);
-    }
-
-    .grid-pic-section {
-        height: 13vw;
-        max-height: 197px;
     }
 }
