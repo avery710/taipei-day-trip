@@ -7,6 +7,8 @@
 
 body {
     min-height: 100vh;
+    display:flex; 
+    flex-direction:column; 
 }
 
 #navigation {
@@ -197,6 +199,8 @@ body {
 
     display: flex;
     justify-content: center;
+
+    flex: 1; 
 }
 
 .grid-container {
@@ -214,6 +218,7 @@ body {
     border: 1px solid rgba(232, 232, 232, 1);
     border-radius: 5px;
     width: 100%;
+    text-decoration: none;
 }
 
 .grid-pic-section {
@@ -284,15 +289,6 @@ body {
 #footer-content {
     font-weight: 700;
     font-size: 16px;
-}
-
-body { 
-    display:flex; 
-    flex-direction:column; 
-}
-
-.attractions { 
-    flex:1; 
 }
 
 @media (min-width: 360px) and (max-width: 600px) {

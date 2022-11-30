@@ -1,0 +1,387 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex; 
+    flex-direction: column; 
+}
+
+#navigation {
+    background-color: white;
+
+    width: 100vw;
+    height: 54px;
+    border-bottom: 1px solid rgba(232, 232, 232, 1);
+
+    position: fixed;
+    top: 0px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 100;
+}
+
+#nav-container {
+    width: 92%;
+    max-width: 1200px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#nav-left {
+    color: rgba(68, 136, 153, 1);
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 34px;
+}
+
+#nav-right button {
+    border-style: hidden;
+    background-color: white;
+    color: rgba(102, 102, 102, 1);
+    padding: 10px;
+
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 13px;
+    cursor: pointer;
+}
+
+#attraction-section {
+    width: 100vw;
+    padding-top: 55px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#upper-section {
+    max-width: 1200px;
+
+    display: grid;
+    gap: 20px 30px;
+}
+
+#slideshow-container {
+    width: 100%;
+    height: 406px;
+    position: relative;
+    
+}
+
+#images-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+
+    z-index: 10;
+}
+
+.slide-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 5px;
+}
+
+#dots-container {
+    position: absolute;
+    left: 50%;
+    bottom: 13px;
+    transform: translate(-50%);
+
+    display: flex;
+    gap: 12px;
+
+    z-index: 20;
+}
+
+.dot {
+    cursor: pointer;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    border: 1px solid white;
+    opacity: 0.75;
+}
+
+.active {
+    background-color: black;
+}
+
+.prev, 
+.next {
+    cursor: pointer;
+    position: absolute;
+    top: 45%;
+
+    width: 36px;
+    height: 36px;
+    opacity: 0.75;
+    border-radius: 50%;
+    background-color: white;
+    color: rgb(102, 102, 102);
+    font-size: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 3px;
+    
+
+    z-index: 20;
+}
+
+.prev {
+    left: 10px;
+    padding-right: 1px;
+}
+
+.next {
+    right: 10px;
+    padding-left: 2px;
+}
+
+#others {
+    width: 100%;
+}
+
+#name {
+    font-weight: 700;
+    font-size: 24px;
+    color: #666666;
+    height: 33px;
+
+    display: flex;
+    align-items: center;
+}
+
+#info {
+    font-weight: 500;
+    font-size: 16px;
+    color: #666666;
+    height: 22px;
+
+    margin-top: 15px;
+    margin-bottom: 20px;
+
+    display: flex;
+    align-items: center;
+}
+
+#booking {
+    width: 100%;
+    height: 300px;
+    background-color: #E8E8E8;
+    border-radius: 5px;
+    padding: 15px 20px;
+}
+
+#booking p,
+#booking label {
+    font-size: 16px;
+    color: #666666;
+}
+
+#booking-title-1,
+#booking-title-2 {
+    margin-bottom: 15px;
+
+    display: flex;
+    align-items: center;
+}
+
+#booking-title-1 {
+    font-weight: 700;
+    height: 22px;
+}
+
+#booking-title-2 {
+    font-weight: 500;
+    line-height: 23px;
+}
+
+#booking-date,
+#booking-time,
+#expense {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.booking-title-3 {
+    height: 17px;
+    font-weight: 700;
+
+    display: flex;
+    align-items: center;
+}
+
+#booking-date input {
+    border-style: none;
+    width: 193px;
+    height: 35px;
+    padding: 5px 10px;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+
+    margin-left: 5px;
+}
+
+#booking-time input {
+    appearance: none;
+    background-color: white;
+    width: 22px;
+    height: 22px;
+    border-radius: 11px;
+
+    margin-left: 10px;
+}
+
+#booking-time label {
+    margin-left: 5px;
+}
+
+#booking-time input:checked {
+    border: 2px solid white;
+    background-color: #448899;
+}
+
+#expense {
+    margin-bottom: 25px;
+}
+
+#expense-result {
+    display: inline;
+    margin-left: 5px;
+}
+
+#booking button {
+    padding: 10px 20px;
+    background-color: #448899;
+    border-radius: 5px;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 16px;
+    color: white;
+    border-style: none;
+}
+
+hr {
+    border: 0;
+    clear: both;
+    display: block;             
+    background-color: #E8E8E8;
+    height: 1px;
+
+    width: 90%;
+    max-width: 1200px;
+}
+
+#text-section {
+    width: 90%;
+    max-width: 1200px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: justify;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.text {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 23px;
+    color: #666666;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 13px;
+    color: #666666;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+}
+
+#description {
+    margin-bottom: 20px;
+}
+
+#address {
+    margin-bottom: 20px;
+}
+
+.footer {
+    background-color: rgba(102, 102, 102, 1);
+    color: white;
+
+    width: 100%;
+    min-height: 104px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#footer-content {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+@media (min-width: 360px) and (max-width: 600px) {
+    #upper-section {
+        grid-template-columns: 1fr;
+        padding-bottom: 37px;
+        width: 100%;
+    }
+
+    #others {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .slide-img {
+        border-radius: 0;
+    }
+
+    #slideshow-container {
+        height: 350px;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 1024px) {
+    #upper-section {
+        grid-template-columns: 1fr;
+        padding: 37px 12px;
+        width: 90%;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 2000px) {
+    #upper-section {
+        grid-template-columns: 0.9fr 1fr;
+        padding: 37px 12px;
+        width: 90%;
+    }
+}

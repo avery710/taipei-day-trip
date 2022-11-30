@@ -29,6 +29,17 @@ cnx_pool = mysql.connector.pooling.MySQLConnectionPool(
 def index():
 	return render_template("index.html")
 
+@app.route("/attraction/<id>")
+def attraction(id):
+	return render_template("attraction.html", id=id)
+
+@app.route("/booking")
+def booking():
+	return render_template("booking.html")
+	
+@app.route("/thankyou")
+def thankyou():
+	return render_template("thankyou.html")
 
 @app.route("/api/attractions")
 def search_attractions():
@@ -177,14 +188,6 @@ def attraction_categories():
 			my_cursor.close()
 			connection.close()
 
-
-@app.route("/booking")
-def booking():
-	return render_template("booking.html")
-	
-@app.route("/thankyou")
-def thankyou():
-	return render_template("thankyou.html")
 
 if __name__ == '__main__':
     app.run(port=3000, host="0.0.0.0")
