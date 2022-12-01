@@ -11,8 +11,8 @@ app.config["TEMPLATES_AUTO_RELOAD"]=True
 # mysql connection pool configure
 dbconfig = {
 	"host" : "localhost",
-	"user" : "root",
-	"password" : "Angeldemima0710!",
+	"user" : "avery",
+	"password" : "Averydemima0710!",
 	"database" : "taipei_trip"
 }
 
