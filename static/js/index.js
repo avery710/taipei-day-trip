@@ -10,8 +10,9 @@ let search_bar = document.getElementById('search-bar')
 
 
 function add_grid(parentElem, attraction){
-    let grid = document.createElement('div')
+    let grid = document.createElement('a')
     grid.className = "per-grid"
+    grid.setAttribute('href', `${root_url}attraction/${attraction['id']}`)
     parentElem.appendChild(grid)
 
 

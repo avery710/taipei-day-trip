@@ -7,6 +7,8 @@
 
 body {
     min-height: 100vh;
+    display:flex; 
+    flex-direction:column; 
 }
 
 #navigation {
@@ -113,7 +115,6 @@ body {
 }
 
 #search-bar input {
-    width: 400px;
     height: 46px;
     background-color: white;
     border-style: hidden;
@@ -197,6 +198,8 @@ body {
 
     display: flex;
     justify-content: center;
+
+    flex: 1; 
 }
 
 .grid-container {
@@ -214,12 +217,14 @@ body {
     border: 1px solid rgba(232, 232, 232, 1);
     border-radius: 5px;
     width: 100%;
+    text-decoration: none;
 }
 
 .grid-pic-section {
     position: relative;
     width: 100%;
     overflow: hidden;
+    aspect-ratio: 4/3;
 }
 
 .grid-img {
@@ -285,22 +290,13 @@ body {
     font-size: 16px;
 }
 
-body { 
-    display:flex; 
-    flex-direction:column; 
-}
-
-.attractions { 
-    flex:1; 
-}
-
 @media (min-width: 360px) and (max-width: 600px) {
     .grid-container {
         grid-template-columns: 1fr;
     }
 
-    .grid-pic-section {
-        max-height: 235px;
+    #search-bar input {
+        width: 70vw;
     }
 }
 
@@ -309,9 +305,8 @@ body {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .grid-pic-section {
-        height: 50vw;
-        max-height: 210px;
+    #search-bar input {
+        width: 400px;
     }
 }
 
@@ -320,8 +315,7 @@ body {
         grid-template-columns: repeat(4, 1fr);
     }
 
-    .grid-pic-section {
-        height: 13vw;
-        max-height: 197px;
+    #search-bar input {
+        width: 400px;
     }
 }
