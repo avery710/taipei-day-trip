@@ -115,7 +115,6 @@ body {
 }
 
 #search-bar input {
-    width: 400px;
     height: 46px;
     background-color: white;
     border-style: hidden;
@@ -295,16 +294,28 @@ body {
     .grid-container {
         grid-template-columns: 1fr;
     }
+
+    #search-bar input {
+        width: 70vw;
+    }
 }
 
 @media (min-width: 600px) and (max-width: 1200px) {
     .grid-container {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    #search-bar input {
+        width: 400px;
+    }
 }
 
 @media (min-width: 1200px) and (max-width: 1920px) {
     .grid-container {
         grid-template-columns: repeat(4, 1fr);
+    }
+
+    #search-bar input {
+        width: 400px;
     }
 }
