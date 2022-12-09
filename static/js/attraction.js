@@ -18,6 +18,7 @@ const signup_section = document.getElementById('signup')
 const close_buttons = document.querySelectorAll('.close-button')
 const overlay_section = document.querySelector('.overlay')
 
+const index_button = document.getElementById('nav-left')
 const overlay_trigger = document.getElementById('overlay-trigger')
 const logout = document.getElementById('logout')
 
@@ -121,34 +122,39 @@ document.querySelectorAll('input[name="booking-time"]').forEach(radio => {
 fetch(`/api/attraction/${id}`)
 .then(res => res.json())
 .then(data => {
-    let attraction = data['data']
-
-    spot_name.textContent = attraction['name']
-    cat.textContent = attraction['category']
-    mrt.textContent = attraction['mrt']
-    description.textContent = attraction['description']
-    address.textContent = attraction['address']
-    transport.textContent = attraction['transport']
-
-    images = attraction['images']
-    images.forEach(url => {
-        add_img(url)
-        add_dot()
-    })
-
-    let dots = document.querySelectorAll('.dot')
-    for (let i = 0; i < images.length; i++){
-        dots[i].addEventListener('click', event => {
-            currentSlide(i + 1)
-        })
+    if (data['error'] == true){
+        const attraction_section  = document.getElementById('attraction-section')
+        attraction_section.textContent = "查無此景點"
+        attraction_section.classList.add('empty')
     }
+    else {
+        let attraction = data['data']
 
-    slideIndex = 1
-    showSlides(slideIndex)
+        spot_name.textContent = attraction['name']
+        cat.textContent = attraction['category']
+        mrt.textContent = attraction['mrt']
+        description.textContent = attraction['description']
+        address.textContent = attraction['address']
+        transport.textContent = attraction['transport']
+
+        images = attraction['images']
+        images.forEach(url => {
+            add_img(url)
+            add_dot()
+        })
+
+        let dots = document.querySelectorAll('.dot')
+        for (let i = 0; i < images.length; i++){
+            dots[i].addEventListener('click', event => {
+                currentSlide(i + 1)
+            })
+        }
+
+        slideIndex = 1
+        showSlides(slideIndex)
+    }
 })
 .catch(error => console.log(error))
-
-
 
 
 login_prompt.addEventListener('click', e => {
