@@ -6,11 +6,6 @@ import security.jwt as jwtModule
 import security.mysql_cnx as mysqlModule
 import security.email_check as emailModule
 from flask_bcrypt import Bcrypt
-import os
-
-
-from dotenv import load_dotenv
-load_dotenv()
 
 
 app=Flask(__name__)
