@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% block stylesheet %}{% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/base.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+
+    {% block head_script %}{% endblock %}
+
+    <title>台北一日遊</title>
+</head>
+
+<body>
+    <div id="navigation">
+        <div id="nav-container">
+            <a href="/" id="nav-left">台北一日遊</a>
+
+            <div id="nav-right">
+                <button class="nav-button">預定行程</button>
+                <button class="nav-button" id="overlay-trigger">登入/註冊</button>
+                <button class="nav-button" id="logout">登出系統</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay">
+        <div class="overlay-content" id="login">
+            <div class="decorated-bar"></div>
+            <div class="overlay-title">登入會員帳號</div>
+            <form id="login-form">
+                <input type="email" placeholder="輸入電子信箱" class="auth-input" id="login-email">
+                <input type="password" placeholder="輸入密碼" class="auth-input" id="login-pw">
+                <input type="submit" value="登入帳戶" class="auth-submit">
+            </form>
+            <div class="error-message"></div>
+            <div id="login-prompt">還沒有帳戶？點此註冊</div>
+            <img src="{{ url_for('static', filename='img/icon_close.png') }}" class="close-button">
+        </div>
+
+        <div class="overlay-content" id="signup">
+            <div class="decorated-bar"></div>
+            <div class="overlay-title">註冊會員帳號</div>
+            <form id="signup-form">
+                <input type="text" placeholder="輸入姓名" class="auth-input" id="signup-name">
+                <input type="email" placeholder="輸入電子信箱" class="auth-input" id="signup-email">
+                <input type="password" placeholder="輸入密碼，長度至少為8位字元" class="auth-input" id="signup-pw">
+                <input type="submit" value="註冊新帳戶" class="auth-submit">
+            </form>
+            <div class="error-message"></div>
+            <div id="signup-prompt">已經有帳戶了？點此登入</div>
+            <img src="{{ url_for('static', filename='img/icon_close.png') }}" class="close-button">
+        </div>
+    </div>
+
+    {% block body %}{% endblock %}
+
+    <div class="footer">
+        <div id="footer-content">COPYRIGHT &#169; 2021 台北一日遊</div>
+    </div>
+
+    {% block body_script %}{% endblock %}
+</body>
+</html>

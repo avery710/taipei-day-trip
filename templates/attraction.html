@@ -1,45 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "base.html" %}
 
+{% block stylesheet %}
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/attraction.css') }}">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-
+{% endblock %}
+  
+{% block head_script %}
     <script>
         const id = "{{id}}"
     </script>
-
-    <title>台北一日遊</title>
-</head>
-
-<body>
-    <div id="navigation">
-        <div id="nav-container">
-            <div id="nav-left">
-                台北一日遊
-            </div>
-
-            <div id="nav-right">
-                <button class="nav-button">預定行程</button>
-                <button class="nav-button">登入/註冊</button>
-            </div>
-        </div>
-    </div>
-
+{% endblock %}
+    
+{% block body %}
     <div id="attraction-section">
         <div id="upper-section">
             <div id="slideshow-container">
                 <div id="images-container">
                 </div>
 
-                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                <img src="{{ url_for('static', filename='img/btn_leftArrow.png') }}" class="prev" onclick="plusSlides(-1)">
+                <img src="{{ url_for('static', filename='img/btn_rightArrow.png') }}" class="next" onclick="plusSlides(1)">
 
                 <div id="dots-container">
                 </div>
@@ -94,11 +73,8 @@
             <p id="transport" class="text"></p>
         </div>
     </div>
+{% endblock %}
     
-    <div class="footer">
-        <div id="footer-content">COPYRIGHT &#169; 2021 台北一日遊</div>
-    </div>
-
+{% block body_script %}
     <script src="{{ url_for('static', filename='js/attraction.js') }}"></script>
-</body>
-</html>
+{% endblock %}

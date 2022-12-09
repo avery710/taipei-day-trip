@@ -1,70 +1,18 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Noto Sans TC', sans-serif;
-}
-
-body {
-    min-height: 100vh;
-    display: flex; 
-    flex-direction: column; 
-}
-
-#navigation {
-    background-color: white;
-
-    width: 100vw;
-    height: 54px;
-    border-bottom: 1px solid rgba(232, 232, 232, 1);
-
-    position: fixed;
-    top: 0px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    z-index: 100;
-}
-
-#nav-container {
-    width: 92%;
-    max-width: 1200px;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-#nav-left {
-    color: rgba(68, 136, 153, 1);
-    font-weight: 700;
-    font-size: 30px;
-    line-height: 34px;
-}
-
-#nav-right button {
-    border-style: hidden;
-    background-color: white;
-    color: rgba(102, 102, 102, 1);
-    padding: 10px;
-
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 13px;
-    cursor: pointer;
-}
-
 #attraction-section {
     width: 100vw;
     padding-top: 55px;
+    padding-bottom: 104px;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.empty {
+    color: #757575;
+    font-weight: 700;
+    margin-top: 100px;
 }
 
 #upper-section {
@@ -132,28 +80,20 @@ body {
     width: 36px;
     height: 36px;
     opacity: 0.75;
-    border-radius: 50%;
-    background-color: white;
-    color: rgb(102, 102, 102);
-    font-size: 30px;
 
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-bottom: 3px;
     
-
     z-index: 20;
 }
 
 .prev {
     left: 10px;
-    padding-right: 1px;
 }
 
 .next {
     right: 10px;
-    padding-left: 2px;
 }
 
 #others {
@@ -329,24 +269,6 @@ hr {
 
 #address {
     margin-bottom: 20px;
-}
-
-.footer {
-    background-color: rgba(102, 102, 102, 1);
-    color: white;
-
-    width: 100%;
-    min-height: 104px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-#footer-content {
-    font-weight: 700;
-    font-size: 16px;
 }
 
 @media (min-width: 360px) and (max-width: 600px) {
