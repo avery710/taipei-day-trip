@@ -44,7 +44,7 @@ body {
     line-height: 34px;
 }
 
-#nav-right button {
+.nav-button {
     border-style: hidden;
     background-color: white;
     color: rgba(102, 102, 102, 1);
