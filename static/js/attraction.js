@@ -1,52 +1,14 @@
 let images = []
-let images_container = document.getElementById('images-container')
-let dots_container = document.getElementById('dots-container')
-let spot_name = document.getElementById('name')
-let cat = document.getElementById('category')
-let mrt = document.getElementById('mrt')
-let description = document.getElementById('description')
-let address = document.getElementById('address')
-let transport = document.getElementById('transport')
-let expense = document.getElementById('expense-result')
-
-
-const login_prompt = document.getElementById('login-prompt')
-const signup_prompt = document.getElementById('signup-prompt')
-const login_section = document.getElementById('login')
-const signup_section = document.getElementById('signup')
-
-const close_buttons = document.querySelectorAll('.close-button')
-const overlay_section = document.querySelector('.overlay')
-
-const index_button = document.getElementById('nav-left')
-const overlay_trigger = document.getElementById('overlay-trigger')
-const logout = document.getElementById('logout')
-
-const login_form = document.getElementById('login-form')
-const signup_form = document.getElementById('signup-form')
-
-
-window.onload = function(){
-    // check whether the user is login
-    fetch('/api/user/auth', {
-        credentials: 'include'
-    })
-    .then(res => res.json())
-    .then(data => {
-        const user_data = data['data']
-
-        if (user_data == null){
-            overlay_trigger.style.display = "inline"
-            logout.style.display = "none"
-        }
-        else {
-            logout.style.display = "inline-block"
-            overlay_trigger.style.display = "none"
-        }
-    }).catch(error => {
-        console.log(`error: ${error}`)
-    })
-}
+const images_container = document.getElementById('images-container')
+const dots_container = document.getElementById('dots-container')
+const spot_name = document.getElementById('name')
+const cat = document.getElementById('category')
+const mrt = document.getElementById('mrt')
+const description = document.getElementById('description')
+const address = document.getElementById('address')
+const transport = document.getElementById('transport')
+const expense = document.getElementById('expense-result')
+const bookingButt = document.getElementById('start-booking')
 
 
 let slideIndex = 1
@@ -119,140 +81,110 @@ document.querySelectorAll('input[name="booking-time"]').forEach(radio => {
 
 
 // fetch basic info about the attraction
-fetch(`/api/attraction/${id}`)
-.then(res => res.json())
-.then(data => {
-    if (data['error'] == true){
-        const attraction_section  = document.getElementById('attraction-section')
-        attraction_section.textContent = "查無此景點"
-        attraction_section.classList.add('empty')
-    }
-    else {
-        let attraction = data['data']
+async function fetchAttraction(){
+    try {
+        const res = await fetch(`/api/attraction/${id}`)
+        const data = await res.json()
 
-        spot_name.textContent = attraction['name']
-        cat.textContent = attraction['category']
-        mrt.textContent = attraction['mrt']
-        description.textContent = attraction['description']
-        address.textContent = attraction['address']
-        transport.textContent = attraction['transport']
+        if (data['error'] == true){
+            const attraction_section  = document.getElementById('attraction-section')
+            attraction_section.textContent = "查無此景點"
+            attraction_section.classList.add('empty')
+        }
+        else {
+            let attraction = data['data']
 
-        images = attraction['images']
-        images.forEach(url => {
-            add_img(url)
-            add_dot()
-        })
+            spot_name.textContent = attraction['name']
+            cat.textContent = attraction['category']
+            mrt.textContent = attraction['mrt']
+            description.textContent = attraction['description']
+            address.textContent = attraction['address']
+            transport.textContent = attraction['transport']
 
-        let dots = document.querySelectorAll('.dot')
-        for (let i = 0; i < images.length; i++){
-            dots[i].addEventListener('click', event => {
-                currentSlide(i + 1)
+            images = attraction['images']
+            images.forEach(url => {
+                add_img(url)
+                add_dot()
             })
-        }
 
-        slideIndex = 1
-        showSlides(slideIndex)
+            let dots = document.querySelectorAll('.dot')
+            for (let i = 0; i < images.length; i++){
+                dots[i].addEventListener('click', event => {
+                    currentSlide(i + 1)
+                })
+            }
+
+            slideIndex = 1
+            showSlides(slideIndex)
+        }
     }
-})
-.catch(error => console.log(error))
+    catch(error){
+        console.log(error)
+    }
+}
 
 
-login_prompt.addEventListener('click', e => {
-    login_section.style.display = 'none'
-    signup_section.style.display = 'flex'
-})
+fetchAttraction()
 
 
-signup_prompt.addEventListener('click', e => {
-    signup_section.style.display = 'none'
-    login_section.style.display = 'flex'
-})
+bookingButt.addEventListener('click', async event => {
+    try {
+        const res = await fetch('/api/user/auth', {
+            credentials: 'include'
+        })
+    
+        const user = await res.json()
+        const user_data = user.data
 
-
-close_buttons.forEach(button => {
-    button.addEventListener('click', e => {
-        overlay_section.style.display = 'none'
-    })
-})
-
-
-overlay_trigger.addEventListener('click', e => {
-    overlay_section.style.display = 'flex'
-})
-
-
-login_form.addEventListener('submit', event => {
-    event.preventDefault();
-
-    const email = document.getElementById('login-email').value
-    const pw = document.getElementById('login-pw').value
-
-    const error_message = document.querySelector('#login .error-message')
-
-    // Build formData object.
-    let formData = new FormData()
-    formData.append('password', pw)
-    formData.append('email', email)
-
-    fetch(`/api/user/auth`, {
-        method: "PUT",
-        body: formData,
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data['error'] == true){
-            error_message.textContent = data['message']
+        if (user_data == null){
+            //  if not login, then login first
+            overlay_section.style.display = 'flex'
         }
-        else if (data['ok'] == true) {
-            window.location.reload();
+        else {
+            // make new booking
+            const bookingDate = document.querySelector('#booking-date input').value
+
+            if (!bookingDate){
+                showPrompt("請選擇行程日期")
+            }
+            else {
+                const bookingTime = document.querySelector('input[name="booking-time"]:checked').value
+                let bookingPrice = 0
+                if (bookingTime == "morning"){
+                    bookingPrice = 2000
+                }
+                else {
+                    bookingPrice = 2500
+                }
+
+                bookingData = {
+                    "attractionId": id,
+                    "date": bookingDate,
+                    "time": bookingTime,
+                    "price": bookingPrice
+                }
+
+                console.log(bookingData)
+
+                const res = await fetch('/api/booking', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(bookingData)
+                })
+
+                const data = await res.json()
+                if (data.ok == true){
+                    window.location.href = '/booking'
+                }
+                else if (data.error == true) {
+                    showPrompt(data.message)
+                }
+            }
         }
-    })
-    .catch(error => console.log(error))
-})
-
-
-signup_form.addEventListener('submit', event => {
-    event.preventDefault();
-
-    const email = document.getElementById('signup-email').value
-    const pw = document.getElementById('signup-pw').value
-    const name = document.getElementById('signup-name').value
-
-    const error_message = document.querySelector('#signup .error-message')
-
-    // Build formData object.
-    let formData = new FormData()
-    formData.append('name', name)
-    formData.append('password', pw)
-    formData.append('email', email)
-
-    fetch(`/api/user`, {
-        method: "POST",
-        body: formData,
-    })
-    .then(res => res.json())
-    .then(data => {
-        // error -> show error-message
-        if (data['error'] == true){
-            error_message.textContent = data['message']
-        }
-        else if (data['ok'] == true) {
-            error_message.textContent = "註冊成功！"
-        }
-    })
-    .catch(error => console.log(error))
-})
-
-
-logout.addEventListener('click', e => {
-    fetch(`/api/user/auth`, {
-        method: "DELETE"
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data['ok'] == true){
-            window.location.reload();
-        }
-    })
-    .catch(error => console.log(error))
+    }
+    catch(error) {
+        console.log(error)
+    }
 })

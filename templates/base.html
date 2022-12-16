@@ -14,7 +14,7 @@
 
     {% block head_script %}{% endblock %}
 
-    <title>台北一日遊</title>
+    <title>{% block title %}{% endblock %}</title>
 </head>
 
 <body>
@@ -23,7 +23,7 @@
             <a href="/" id="nav-left">台北一日遊</a>
 
             <div id="nav-right">
-                <button class="nav-button">預定行程</button>
+                <button class="nav-button" id="to-booking-page">預定行程</button>
                 <button class="nav-button" id="overlay-trigger">登入/註冊</button>
                 <button class="nav-button" id="logout">登出系統</button>
             </div>
@@ -57,6 +57,12 @@
             <div id="signup-prompt">已經有帳戶了？點此登入</div>
             <img src="{{ url_for('static', filename='img/icon_close.png') }}" class="close-button">
         </div>
+
+        <div class="overlay-content" id="prompt-section">
+            <div class="decorated-bar"></div>
+            <div id="message-content"></div>
+            <img src="{{ url_for('static', filename='img/icon_close.png') }}" class="close-button">
+        </div>
     </div>
 
     {% block body %}{% endblock %}
@@ -65,6 +71,7 @@
         <div id="footer-content">COPYRIGHT &#169; 2021 台北一日遊</div>
     </div>
 
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
     {% block body_script %}{% endblock %}
 </body>
 </html>

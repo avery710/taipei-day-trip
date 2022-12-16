@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/booking.css') }}">
+{% endblock %}
+
+{% block head_script %}{% endblock %}
+
+{% block title %}預定行程{% endblock %}
+
+{% block body %}
+    <div id="booking-container">
+        <div id="booking-headline" class="Font-title">
+            您好，<span id="username"></span>，待預訂的行程如下：
+        </div>
+
+        <div id="no-booking">
+            <div id="no-booking-prompt">目前沒有任何待預訂的行程</div>
+        </div>
+
+
+        <div id="booking-content-all">
+            <div id="booking-content">
+                <div id="bookingSpot-img">
+                    <!-- img -->
+                </div>
+    
+                <div id="BookingSpot-info">
+                    <div id="BookingSpot-name">台北一日遊：<span id="trip-name"></span></div>
+    
+                    <div class="BookingSpot-detail">
+                        <span class="inline-title">日期：</span>
+                        <span class="inline-text" id="trip-date"></span>
+                    </div>
+    
+                    <div class="BookingSpot-detail">
+                        <span class="inline-title">時間：</span>
+                        <span class="inline-text" id="trip-time"></span>
+                    </div>
+    
+                    <div class="BookingSpot-detail">
+                        <span class="inline-title">費用：</span>
+                        <span class="inline-text" id="trip-cost"></span>
+                    </div>
+    
+                    <div class="BookingSpot-detail">
+                        <span class="inline-title">地點：</span>
+                        <span class="inline-text" id="trip-address"></span>
+                    </div>
+    
+                    <div id="delete-trip">
+                        <img src="{{ url_for('static', filename='img/icon_delete.png') }}" alt="" srcset="">
+                    </div>
+                </div>
+            </div>
+    
+            <hr>
+    
+            <div id="booking-ContractForm">
+                <div class="Font-title">您的聯絡資訊</div>
+    
+                <p class="form">聯絡姓名：<input type="text" class="input-field"></p>
+                <p class="form">連絡信箱：<input type="email" class="input-field"></p>
+                <p class="form">手機號碼：<input id="tel-num" type="tel" class="input-field" maxlength="12" placeholder="XXXX-XXX-XXX"></p>
+    
+                <p class="form" id="booking-notice">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</p>
+            </div>
+    
+            <hr>
+    
+            <div id="booking-payment">
+                <div class="Font-title">信用卡付款資訊</div>
+    
+                <p class="form">卡片號碼：<input id="credit-number" class="input-field" type="tel"  pattern="\d*" maxlength="19" placeholder="**** **** **** ****"></p>
+                <p class="form">過期時間：<input id="credit-expires" class="input-field" type="tel" pattern="\d*" maxlength="7" placeholder="MM / YY"></p>
+                <p class="form">驗證密碼：<input id="credit-cvc" class="input-field" type="tel" pattern="\d*" maxlength="3" placeholder="CVC"></p>
+            </div>
+    
+            <hr>
+    
+            <div id="booking-confirm">
+                <div id="total-cost">總價：新台幣 2000 元</div>
+                <button id="confirm-payment">確認訂購並付款</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body_script %}
+    <script src="{{ url_for('static', filename='js/booking.js') }}"></script>
+{% endblock %}
