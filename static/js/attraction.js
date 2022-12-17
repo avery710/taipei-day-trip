@@ -67,19 +67,6 @@ function add_dot(){
 }
 
 
-// radio input eventListener
-document.querySelectorAll('input[name="booking-time"]').forEach(radio => {
-    radio.addEventListener('change', event => {
-        if (event.target.value === "morning"){
-            expense.textContent = "新台幣 2000 元"
-        }
-        else if (event.target.value === "afternoon"){
-            expense.textContent = "新台幣 2500 元"
-        }
-    })
-})
-
-
 // fetch basic info about the attraction
 async function fetchAttraction(){
     try {
@@ -124,7 +111,20 @@ async function fetchAttraction(){
 }
 
 
-fetchAttraction()
+window.onload = fetchAttraction()
+
+
+// radio input eventListener
+document.querySelectorAll('input[name="booking-time"]').forEach(radio => {
+    radio.addEventListener('change', event => {
+        if (event.target.value === "morning"){
+            expense.textContent = "新台幣 2000 元"
+        }
+        else if (event.target.value === "afternoon"){
+            expense.textContent = "新台幣 2500 元"
+        }
+    })
+})
 
 
 bookingButt.addEventListener('click', async event => {

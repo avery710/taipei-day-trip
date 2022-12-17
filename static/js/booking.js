@@ -24,6 +24,7 @@ async function initPage(){
         window.location.href = '/'
     }
     else {
+        console.log("hi")
         try {
             username.textContent = localStorageName
             
@@ -72,7 +73,7 @@ async function initPage(){
 }
 
 
-initPage()
+window.onload = initPage()
 
 
 deleteTrip.addEventListener('click', async () => {
@@ -98,16 +99,16 @@ deleteTrip.addEventListener('click', async () => {
 
 telNum.addEventListener('input', event => {
     if (event.target.value.length <= 4){
-        event.target.value = event.target.value.replace(/[^\d]/g, '').replace(/(.{4})/g, '$1-')
+        event.target.value = event.target.value.replace(/[^\d]/g, '').replace(/(.{4})/g, '$1 ')
     }
     else if (event.target.value.length < 8){
-        event.target.value = event.target.value.replace(/[^\d]/g, '').replace(/(.{4})(.+)/g, '$1-$2')
+        event.target.value = event.target.value.replace(/[^\d]/g, '').replace(/(.{4})(.+)/g, '$1 $2')
     }
     else if (event.target.value.length == 8){
-        event.target.value = event.target.value.replace(/[^\d]/g, '').replace(/(.{4})(.{3})/g, '$1-$2-')
+        event.target.value = event.target.value.replace(/[^\d]/g, '').replace(/(.{4})(.{3})/g, '$1 $2 ')
     }
     else if (event.target.value.length > 8){
-        event.target.value = event.target.value.replace(/[^\d]/g, '').replace(/(.{4})(.{3})(.+)/g, '$1-$2-$3')
+        event.target.value = event.target.value.replace(/[^\d]/g, '').replace(/(.{4})(.{3})(.+)/g, '$1 $2 $3')
     }
     
 })
@@ -121,6 +122,7 @@ creditNumber.addEventListener('input', event => {
 creditExpires.addEventListener('input', event => {
     event.target.value = event.target.value.replace(/[^\d]/g, '').replace(/(.{2})(.+)/g, '$1 / $2')
 })
+
 
 creditCVC.addEventListener('input', event => {
     event.target.value = event.target.value.replace(/[^\d]/g, '')

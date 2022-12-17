@@ -30,8 +30,6 @@ async function isLogin(){
             toBookingPage.addEventListener('click', () => {
                 overlay_section.style.display = 'flex'
             })
-
-            localStorage.setItem("name", false)
         }
         else {
             logout.style.display = "inline-block"
@@ -162,6 +160,7 @@ async function fetchLogout(){
         const data = await res.json()
         
         if (data.ok){
+            localStorage.removeItem("name")
             window.location.reload()
         }
     }
