@@ -191,6 +191,7 @@
     border-radius: 11px;
 
     margin-left: 10px;
+    cursor: pointer;
 }
 
 #booking-time label {
@@ -211,7 +212,7 @@
     margin-left: 5px;
 }
 
-#booking button {
+#start-booking {
     padding: 10px 20px;
     background-color: #448899;
     border-radius: 5px;
@@ -220,6 +221,7 @@
     line-height: 16px;
     color: white;
     border-style: none;
+    cursor: pointer;
 }
 
 hr {

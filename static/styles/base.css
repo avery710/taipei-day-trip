@@ -58,6 +58,12 @@ body {
     font-size: 16px;
     line-height: 13px;
     cursor: pointer;
+    text-decoration: none;
+}
+
+#overlay-trigger,
+#logout {
+    display: none;
 }
 
 .overlay {
@@ -90,6 +96,17 @@ body {
 
 #signup {
     display: none;
+}
+
+#prompt-section {
+    display: none;
+}
+
+#message-content {
+    font-weight: 500;
+    font-size: 16px;
+    padding: 30px;
+    color: #666666;
 }
 
 .close-button {

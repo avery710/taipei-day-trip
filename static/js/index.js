@@ -2,24 +2,9 @@ let next_page = null
 let keyword = ""
 let isLoading = false
 
-let input_field = document.getElementById('input-field')
-let category = document.getElementById('category')
-let search_bar = document.getElementById('search-bar')
-
-
-const login_prompt = document.getElementById('login-prompt')
-const signup_prompt = document.getElementById('signup-prompt')
-const login_section = document.getElementById('login')
-const signup_section = document.getElementById('signup')
-
-const close_buttons = document.querySelectorAll('.close-button')
-const overlay_section = document.querySelector('.overlay')
-
-const overlay_trigger = document.getElementById('overlay-trigger')
-const logout = document.getElementById('logout')
-
-const login_form = document.getElementById('login-form')
-const signup_form = document.getElementById('signup-form')
+const input_field = document.getElementById('input-field')
+const category = document.getElementById('category')
+const search_bar = document.getElementById('search-bar')
 
 
 function add_grid(parentElem, attraction){
@@ -75,28 +60,36 @@ function add_category(parentElem, text){
 
 
 // Initialize the page!
-window.onload = function(){
-    // load attraction on visit the page
-    fetch('/api/attractions?page=0')
-    .then(res => res.json())
-    .then(data => {
-        const attractions = data['data']
-        next_page = data['nextPage']
+// load attraction on visit the page
+async function loadAttraction(){
+    try {
+        const res = await fetch('/api/attractions?page=0')
+        const data = await res.json()
+
+        const attractions = data.data
+        next_page = data.nextPage
 
         let grid_section = document.querySelector('.grid-container')
 
         attractions.forEach(attraction => {
             add_grid(grid_section, attraction)
-        });
-
-    }).catch(error => {
+        })
+    }
+    catch(error) {
         console.log(error)
-    })
+    }
+}
 
-    // load category
-    fetch('/api/categories')
-    .then(res => res.json())
-    .then(data => {
+
+loadAttraction()
+
+
+// load category
+async function loadCategory(){
+    try {
+        const res = await fetch('/api/categories')
+        const data = await res.json()
+
         const categories = data['data']
 
         let category_section = document.getElementById('category')
@@ -104,132 +97,14 @@ window.onload = function(){
         categories.forEach(content => {
             add_category(category_section, content)
         })
-
-    }).catch(error => {
-        console.log(`error: ${error}`)
-    })
-
-    // check whether the user is login
-    fetch('/api/user/auth', {
-        credentials: 'include'
-    })
-    .then(res => res.json())
-    .then(data => {
-        const user_data = data['data']
-
-        if (user_data == null){
-            overlay_trigger.style.display = "inline"
-            logout.style.display = "none"
-        }
-        else {
-            logout.style.display = "inline-block"
-            overlay_trigger.style.display = "none"
-        }
-    }).catch(error => {
-        console.log(`error: ${error}`)
-    })
+    }
+    catch(error) {
+        console.log(error)
+    }
 }
 
 
-login_prompt.addEventListener('click', e => {
-    login_section.style.display = 'none'
-    signup_section.style.display = 'flex'
-})
-
-
-signup_prompt.addEventListener('click', e => {
-    signup_section.style.display = 'none'
-    login_section.style.display = 'flex'
-})
-
-
-close_buttons.forEach(button => {
-    button.addEventListener('click', e => {
-        overlay_section.style.display = 'none'
-    })
-})
-
-
-overlay_trigger.addEventListener('click', e => {
-    overlay_section.style.display = 'flex'
-})
-
-
-login_form.addEventListener('submit', event => {
-    event.preventDefault();
-
-    const email = document.getElementById('login-email').value
-    const pw = document.getElementById('login-pw').value
-
-    const error_message = document.querySelector('#login .error-message')
-
-    // Build formData object.
-    let formData = new FormData()
-    formData.append('password', pw)
-    formData.append('email', email)
-
-    fetch('/api/user/auth', {
-        method: "PUT",
-        body: formData,
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data['error'] == true){
-            error_message.textContent = data['message']
-        }
-        else if (data['ok'] == true) {
-            window.location.reload();
-        }
-    })
-    .catch(error => console.log(error))
-})
-
-
-signup_form.addEventListener('submit', event => {
-    event.preventDefault();
-
-    const email = document.getElementById('signup-email').value
-    const pw = document.getElementById('signup-pw').value
-    const name = document.getElementById('signup-name').value
-
-    const error_message = document.querySelector('#signup .error-message')
-
-    // Build formData object.
-    let formData = new FormData()
-    formData.append('name', name)
-    formData.append('password', pw)
-    formData.append('email', email)
-
-    fetch('/api/user', {
-        method: "POST",
-        body: formData,
-    })
-    .then(res => res.json())
-    .then(data => {
-        // error -> show error-message
-        if (data['error'] == true){
-            error_message.textContent = data['message']
-        }
-        else if (data['ok'] == true) {
-            error_message.textContent = "註冊成功！"
-        }
-    })
-    .catch(error => console.log(error))
-})
-
-
-logout.addEventListener('click', e => {
-    fetch('/api/user/auth', {
-        method: "DELETE"
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data['ok'] == true){
-            window.location.reload();
-        }
-    })
-    .catch(error => console.log(error))
-})
+loadCategory()
 
 
 input_field.addEventListener('click', function(){
@@ -267,14 +142,11 @@ document.addEventListener('click', function click_outside_input_field(e){
 })
 
 
-search_bar.addEventListener('submit', event => {
-    event.preventDefault()
+async function searchKeyword(keyword){
+    try {
+        const res = await fetch(`/api/attractions?page=0&keyword=${keyword}`)
+        const data = await res.json()
 
-    keyword = input_field.value
-    
-    fetch(`/api/attractions?page=0&keyword=${keyword}`)
-    .then(res => res.json())
-    .then(data => {
         let grid_section = document.querySelector('.grid-container')
 
         // remove old grids
@@ -282,8 +154,8 @@ search_bar.addEventListener('submit', event => {
         old_grids.forEach(old_grid => old_grid.remove())
         grid_section.innerHTML = null
 
-        const attractions = data['data']
-        next_page = data['nextPage']
+        const attractions = data.data
+        next_page = data.nextPage
 
         if (attractions.length === 0){
             grid_section.innerHTML = "查無此景點"
@@ -293,9 +165,20 @@ search_bar.addEventListener('submit', event => {
                 add_grid(grid_section, attraction)
             })
         }
-    })
-    .catch(error => { console.log(`error: ${error}`) })
-});
+    }
+    catch(error) {
+        console.log(error)
+    }
+}
+
+
+search_bar.addEventListener('submit', async event => {
+    event.preventDefault()
+
+    keyword = input_field.value
+    
+    searchKeyword(keyword)
+})
 
 
 // infinite scroll using intersection observer
@@ -303,28 +186,36 @@ const options = {
   threshold: 0.6
 };
 
+
+async function loadNextPage(){
+    try {
+        const res = await fetch(`/api/attractions?page=${next_page}&keyword=${keyword}`)
+        const data = await res.json()
+
+        const attractions = data.data
+                        
+        console.log(next_page)
+        next_page = data.nextPage
+
+        let grid_section = document.querySelector('.grid-container')
+
+        attractions.forEach(attraction => {
+            add_grid(grid_section, attraction)
+        })
+    }
+    catch(error) {
+        console.log(error)
+    }
+}
+
+
 const callback = (entries, observer) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             if (next_page != null && isLoading == false){
                 isLoading = true
-
-                fetch(`/api/attractions?page=${next_page}&keyword=${keyword}`)
-                .then(res => res.json())
-                .then(data => {
-                    const attractions = data['data']
-                    
-                    console.log(next_page)
-                    next_page = data['nextPage']
-    
-                    let grid_section = document.querySelector('.grid-container')
-    
-                    attractions.forEach(attraction => {
-                        add_grid(grid_section, attraction)
-                    })
-                }).catch(error => {
-                    console.log(`error: ${error}`)
-                })
+  
+                loadNextPage()
 
                 isLoading = false
             }
