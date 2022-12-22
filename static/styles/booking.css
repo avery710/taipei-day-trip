@@ -171,12 +171,14 @@ hr {
 
     border: 1px solid #E8E8E8;
     border-radius: 5px;
+    font-size: 13px;
 }
 
-.input-field:focus{
+.input-field:focus {
     outline: none !important;
     border-color: #E8E8E8;
     box-shadow: 0 0 10px #E8E8E8;
+    color: black;
 }
 
 #booking-notice {
@@ -231,6 +233,16 @@ hr {
     border: none;
 
     cursor: pointer;
+}
+
+.tpfield {
+    width: 200px;
+    height: 38px;
+    padding: 10px;
+    border: 1px solid #E8E8E8;
+    border-radius: 5px;
+    margin: 5px 0;
+    display: inline-block;
 }
 
 @media (min-width: 360px) and (max-width: 640px) {
