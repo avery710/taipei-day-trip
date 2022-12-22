@@ -1,0 +1,24 @@
+#payment-container {
+    width: 100vw;
+    padding-top: 55px;
+    padding-bottom: 104px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#payment-prompt {
+    padding-top: 50px;
+
+    max-width: 1000px;
+    width: 90%;
+
+    font-weight: 500;
+    font-size: 16px;
+    color: #666666;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
