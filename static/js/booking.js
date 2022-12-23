@@ -76,6 +76,7 @@ async function initPage(){
             console.log(error)
         }
     }
+    loadingSection.style.display = "none"  
 }
 
 
@@ -310,6 +311,8 @@ confirmPayment.addEventListener('click', event => {
         console.log('can not get prime')
         return
     }
+
+    loadingSection.style.display = "flex" 
 
     // Get prime
     TPDirect.card.getPrime((result) => {

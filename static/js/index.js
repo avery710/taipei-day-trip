@@ -101,6 +101,8 @@ async function loadCategory(){
     catch(error) {
         console.log(error)
     }
+    
+    loadingSection.style.display = "none" 
 }
 
 

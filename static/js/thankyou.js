@@ -11,3 +11,7 @@ function getParameterByName(name, url = window.location.href) {
 }
 
 orderNumber.textContent = getParameterByName('number')
+
+window.addEventListener('load', () => {
+    loadingSection.style.display = "none"
+})
