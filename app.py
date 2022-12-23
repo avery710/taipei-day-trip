@@ -704,6 +704,13 @@ def makeOrders():
 			my_cursor.execute(update_payment, (order_number,))
 			connection.commit()
 
+			# delete booking data
+			delete_booking = (
+				"DELETE FROM booking "
+				"WHERE user_id = %s"
+			)
+			my_cursor.execute(delete_booking, (user_id,))
+
 			response = {
 				"data": {
 					"number": order_number,
