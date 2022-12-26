@@ -11,6 +11,7 @@ const login_form = document.getElementById('login-form')
 const signup_form = document.getElementById('signup-form')
 const toBookingPage = document.getElementById('to-booking-page')
 const prompt = document.getElementById('message-content')
+const loadingSection = document.querySelector('.loading-section')
 
 
 // check whether the user is login

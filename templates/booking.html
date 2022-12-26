@@ -4,7 +4,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/booking.css') }}">
 {% endblock %}
 
-{% block head_script %}{% endblock %}
+{% block head_script %}
+    <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
+    <script>
+        const APP_ID = 126909
+        const APP_KEY = 'app_JeQzEz50F69oGKI9gql0iRWBKdadoWE1p3PGWH3Q4imI4tn9uvUBccSTn3Kn'
+        TPDirect.setupSDK(APP_ID, APP_KEY, 'sandbox')
+    </script>
+{% endblock %}
 
 {% block title %}預定行程{% endblock %}
 
@@ -59,9 +66,9 @@
             <div id="booking-ContractForm">
                 <div class="Font-title">您的聯絡資訊</div>
     
-                <p class="form">聯絡姓名：<input type="text" class="input-field"></p>
-                <p class="form">連絡信箱：<input type="email" class="input-field"></p>
-                <p class="form">手機號碼：<input id="tel-num" type="tel" class="input-field" maxlength="12" placeholder="09XX XXX XXX"></p>
+                <p class="form">聯絡姓名：<input id="contact-name" type="text" class="input-field" minlength="1"></p>
+                <p class="form">連絡信箱：<input id="contact-email" type="email" class="input-field"></p>
+                <p class="form">手機號碼：<input id="contact-phone" type="tel" class="input-field" maxlength="10"></p>
     
                 <p class="form" id="booking-notice">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</p>
             </div>
@@ -71,9 +78,9 @@
             <div id="booking-payment">
                 <div class="Font-title">信用卡付款資訊</div>
     
-                <p class="form">卡片號碼：<input id="credit-number" class="input-field" type="tel"  pattern="\d*" maxlength="19" placeholder="**** **** **** ****"></p>
-                <p class="form">過期時間：<input id="credit-expires" class="input-field" type="tel" pattern="\d*" maxlength="7" placeholder="MM / YY"></p>
-                <p class="form">驗證密碼：<input id="credit-cvc" class="input-field" type="tel" pattern="\d*" maxlength="3" placeholder="CVC"></p>
+                <div class="form">卡片號碼：<div class="tpfield" id="card-number"></div></div>
+                <div class="form">過期時間：<div class="tpfield" id="card-expiration-date"></div></div>
+                <div class="form">驗證密碼：<div class="tpfield" id="card-ccv"></div></div>
             </div>
     
             <hr>

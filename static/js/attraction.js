@@ -108,6 +108,8 @@ async function fetchAttraction(){
     catch(error){
         console.log(error)
     }
+
+    loadingSection.style.display = "none" 
 }
 
 
@@ -148,6 +150,8 @@ bookingButt.addEventListener('click', async event => {
                 showPrompt("請選擇行程日期")
             }
             else {
+                loadingSection.style.display = "flex" 
+
                 const bookingTime = document.querySelector('input[name="booking-time"]:checked').value
                 let bookingPrice = 0
                 if (bookingTime == "morning"){
@@ -164,8 +168,6 @@ bookingButt.addEventListener('click', async event => {
                     "price": bookingPrice
                 }
 
-                console.log(bookingData)
-
                 const res = await fetch('/api/booking', {
                     method: 'POST',
                     headers: {
@@ -179,6 +181,7 @@ bookingButt.addEventListener('click', async event => {
                     window.location.href = '/booking'
                 }
                 else if (data.error == true) {
+                    loadingSection.style.display = "none" 
                     showPrompt(data.message)
                 }
             }

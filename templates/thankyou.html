@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/thankyou.css') }}">
+{% endblock %}
+
+{% block head_script %}{% endblock %}
+
+{% block title %}訂單完成{% endblock %}
+
+{% block body %}
+<div id="payment-container">
+    <div id="payment-prompt">
+        訂單<span id="order-number"></span>已完成
+    </div>
+
+</div>
+{% endblock %}
+
+{% block body_script %}
+    <script src="{{ url_for('static', filename='js/thankyou.js') }}"></script>
+{% endblock %}
