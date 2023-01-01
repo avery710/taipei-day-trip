@@ -248,6 +248,8 @@ const options = {
 
 async function loadNextPage(){
     try {
+        isLoading = true
+
         gridLoading.style.display = "flex"
 
         const res = await fetch(`/api/attractions?page=${next_page}&keyword=${keyword}`)
@@ -267,6 +269,8 @@ async function loadNextPage(){
         })
 
         loadMore(imgArray, gridArray)
+
+        isLoading = false
     }
     catch(error) {
         console.log(error)
@@ -278,11 +282,7 @@ const callback = (entries, observer) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             if (next_page != null && isLoading == false){
-                isLoading = true
-  
                 loadNextPage()
-
-                isLoading = false
             }
         }
     })
