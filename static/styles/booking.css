@@ -233,6 +233,12 @@ hr {
     border: none;
 
     cursor: pointer;
+
+    transition: transform 0.15s ease-in-out;
+}
+
+#confirm-payment:hover {
+    transform: scale(0.97);
 }
 
 .tpfield {
