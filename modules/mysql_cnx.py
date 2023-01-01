@@ -21,3 +21,6 @@ def open_cnx_pool():
     )
 
     return cnx_pool
+
+
+cnx_pool = open_cnx_pool()
