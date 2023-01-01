@@ -1,0 +1,159 @@
+#order-container {
+    width: 100vw;
+    padding-top: 55px;
+    padding-bottom: 104px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#order-content-all {
+    width: 100vw;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 100px;
+}
+
+#no-order {
+    max-width: 1000px;
+    width: 90%;
+    height: 24px;
+
+    display: none;
+}
+
+#no-order-prompt {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 13px;
+    color: #666666;
+
+    display: flex;
+    align-items: center;
+}
+
+hr {
+    border: 0;
+    clear: both;
+    display: block;             
+    background-color: #E8E8E8;
+    height: 1px;
+
+    width: 90%;
+    max-width: 1000px;
+}
+
+#order-headline {
+    margin-top: 40px;
+    margin-bottom: 30px;
+
+    max-width: 1000px;
+    width: 90%;
+    height: 27px;
+
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 16px;
+    color: #666666;
+
+    display: flex;
+    align-items: center;
+}
+
+.order-content {
+    max-width: 1000px;
+    width: 93%;
+    display: grid;
+    gap: 22px;
+    cursor: pointer;
+    text-decoration: none;
+
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.order-img {
+    width: 100%;
+    max-width: 335px;
+    aspect-ratio: 4/3;
+}
+
+.order-img-tag {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: top center;
+}
+
+.order-info {
+    width: 100%;
+    position: relative;
+}
+
+.order-name {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 13px;
+    color: #448899;
+
+    height: 24px;
+    margin-bottom: 20px;
+
+    display: flex;
+    align-items: center;
+}
+
+.order-detail {
+    height: 24px;
+    margin-bottom: 10px;
+}
+
+.inline-text {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 18px;
+    color: #666666;
+
+    display: inline-block;
+}
+
+.order-expense {
+    position: absolute;
+    cursor: pointer;
+}
+
+.order-content:hover{
+    background-color: #f5f5f5;
+}
+
+@media (min-width: 360px) and (max-width: 900px) {
+    .order-content {
+        grid-template-columns: 1fr;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .order-expense {
+        top: 0;
+        right: 0;
+    }
+    
+}
+
+@media (min-width: 900px) and (max-width: 2000px) {
+    .order-content {
+        grid-template-columns: 240px 1fr;
+    }
+
+    .order-expense {
+        right: 0;
+        top: 40%;
+    }
+}

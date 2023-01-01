@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/history.css') }}">
+{% endblock %}
+
+{% block head_script %}
+{% endblock %}
+
+{% block title %}歷史訂單{% endblock %}
+
+{% block body %}
+    <div id="order-container">
+        <div id="order-headline">
+            您好，<span id="username"></span>，已訂購的行程如下：
+        </div>
+
+        <div id="no-order">
+            <div id="no-order-prompt">尚未購買行程</div>
+        </div>
+
+        <div id="order-content-all">
+            <template class="order-template">
+                <a class="order-content">
+                    <div class="order-img">
+                        <img src="" class="order-img-tag">
+                    </div>
+    
+                    <div class="order-info">
+                        <div class="order-name"></div>
+    
+                        <div class="order-detail">
+                            <div class="inline-text">日期：</div>
+                            <div class="inline-text order-date"></div>
+                        </div>
+    
+                        <div class="order-detail">
+                            <div class="inline-text">時間：</div>
+                            <div class="inline-text order-time"></div>
+                        </div>
+    
+                        <div class="order-detail">
+                            <div class="inline-text">地點：</div>
+                            <div class="inline-text order-address"></div>
+                        </div>
+
+                        <div class="order-detail">
+                            <div class="inline-text">訂單編號：</div>
+                            <div class="inline-text order-number"></div>
+                        </div>
+    
+                        <div class="order-expense">
+                            <div class="inline-text order-cost"></div>
+                        </div>
+                    </div>
+                </a>
+                <hr>
+            </template>
+            
+        </div>
+    </div>
+    
+{% endblock %}
+
+{% block body_script %}
+    <script src="{{ url_for('static', filename='js/history.js') }}"></script>
+{% endblock %}
