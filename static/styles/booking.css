@@ -136,6 +136,11 @@ hr {
     width: 30px;
 
     cursor: pointer;
+    transition: all 0.15s ease-in-out;
+}
+
+#delete-trip:hover {
+    transform: scale(1.1);
 }
 
 #booking-ContractForm {
