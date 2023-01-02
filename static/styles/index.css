@@ -80,7 +80,6 @@
 #input-field:focus {
     outline: none !important;
     border: 2px solid #448899;
-    /* box-shadow: 0 0 10px #448899; */
 }
 
 #search-bar button {
@@ -94,12 +93,10 @@
     display: inline;
 
     position: relative;
-
-    transition: opacity(0.15s) ease-in-out;
 }
 
 #search-bar button:hover {
-    opacity: 0.8;
+    background-color: #29788b;
 }
 
 #search-bar button img {
@@ -198,7 +195,7 @@
     object-fit: cover;
     object-position: top center;
 
-    transition: transform 0.15s ease-in-out;
+    transition: transform 0.5s ease-in-out;
 }
 
 .per-grid:hover .grid-img {
