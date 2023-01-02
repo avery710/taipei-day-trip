@@ -211,5 +211,5 @@ bookingButt.addEventListener('click', async event => {
 
 
 let today = new Date();
-today = new Date(today.setDate(today.getDate() + 1)).toISOString().split('T')[0]
+today = new Date(today.setDate(today.getDate() + 2)).toISOString().split('T')[0]
 dateInput.setAttribute('min', today)
