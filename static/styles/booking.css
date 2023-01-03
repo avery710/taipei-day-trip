@@ -50,33 +50,11 @@ hr {
     margin-bottom: 40px;
 }
 
-.to-history {
-    display: flex;
-    justify-content: flex-start;
-}
-
-.main-headline {
-    display: block;
+.Font-title {
     font-weight: 700;
     font-size: 19px;
     line-height: 16px;
     color: #666666;
-}
-
-.to-history-page {
-    padding-top: 30px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 19px;
-    line-height: 16px;
-    color: #666666;
-    opacity: 0.3;
-    transition: all 0.15s ease-in-out;
-    display: block;
-}
-
-.to-history-page:hover {
-    opacity: 1;
 }
 
 #booking-headline {
@@ -85,10 +63,10 @@ hr {
 
     max-width: 1000px;
     width: 90%;
+    height: 27px;
 
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
 }
 
 #booking-content {

@@ -69,6 +69,10 @@ body {
     color: #448899;
 }
 
+.to-history-page {
+    display: none;
+}
+
 #overlay-trigger,
 #logout {
     display: none;

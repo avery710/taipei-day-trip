@@ -13,6 +13,7 @@ const navRightSection = document.getElementById('nav-right')
 const overlayTrigger = document.querySelector('.overlay-trigger')
 const logout = document.querySelector('.logout')
 const toBookingPage = document.querySelector('.to-booking-page')
+const toHistoryPage = document.querySelector('.to-history-page')
 
 
 // check whether the user is login
@@ -35,6 +36,12 @@ async function isLogin(){
         }
         else {
             overlayTrigger.style.display = "none"
+
+            if (window.location.pathname === "/booking"){
+                toBookingPage.style.display = "none"
+                toHistoryPage.style.display = "inline-block"
+                console.log("hi")
+            }
             
             toBookingPage.addEventListener('click', () => {
                 window.location.href = '/booking'
@@ -184,3 +191,8 @@ function showPrompt(message){
 
     prompt.textContent = message
 }
+
+
+toHistoryPage.addEventListener('click', () => {
+    window.location.href = "/history"
+})
