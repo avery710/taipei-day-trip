@@ -79,13 +79,15 @@
 
     width: 36px;
     height: 36px;
-    opacity: 0.75;
+    opacity: 0.5;
 
     display: flex;
     align-items: center;
     justify-content: center;
     
     z-index: 20;
+
+    transition: all 0.15s ease-in-out;
 }
 
 .prev {
@@ -94,6 +96,17 @@
 
 .next {
     right: 10px;
+}
+
+.prev:hover,
+.next:hover {
+    /* transform: scale(0.95); */
+    opacity: 0.95;
+}
+
+.prev:active,
+.next:active {
+    transform: scale(0.95);
 }
 
 #others {
@@ -183,6 +196,10 @@
     margin-left: 5px;
 }
 
+#booking-date input:focus {
+    outline: none;
+}
+
 #booking-time input {
     appearance: none;
     background-color: white;
@@ -222,6 +239,11 @@
     color: white;
     border-style: none;
     cursor: pointer;
+    transition: transform 0.15s ease-in-out;
+}
+
+#start-booking:hover {
+    transform: scale(0.97);
 }
 
 hr {

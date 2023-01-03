@@ -48,6 +48,10 @@ body {
     text-decoration: none;
 }
 
+#nav-right {
+    position: relative;
+}
+
 .nav-button {
     border-style: hidden;
     background-color: white;
@@ -59,6 +63,14 @@ body {
     line-height: 13px;
     cursor: pointer;
     text-decoration: none;
+}
+
+.nav-button:hover {
+    color: #448899;
+}
+
+.to-history-page {
+    display: none;
 }
 
 #overlay-trigger,

@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link rel="icon" href="/static/img/weblogo3.png">
+
     {% block stylesheet %}{% endblock %}
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/base.css') }}">
 
@@ -18,7 +20,7 @@
 </head>
 
 <body>
-    <div class="loading-section">
+    <div class="loading-section" id="page-loading">
         <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     </div>
 
@@ -27,9 +29,10 @@
             <a href="/" id="nav-left">台北一日遊</a>
 
             <div id="nav-right">
-                <button class="nav-button" id="to-booking-page">預定行程</button>
-                <button class="nav-button" id="overlay-trigger">登入/註冊</button>
-                <button class="nav-button" id="logout">登出系統</button>
+                <button class="nav-button to-history-page">歷史訂單</button>
+                <button class="nav-button to-booking-page">預定行程</button>
+                <button class="nav-button overlay-trigger">登入/註冊</button>
+                <button class="nav-button logout">登出系統</button>
             </div>
         </div>
     </div>

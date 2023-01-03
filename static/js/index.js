@@ -2,13 +2,15 @@ let next_page = null
 let keyword = ""
 let isLoading = false
 
-const input_field = document.getElementById('input-field')
+const inputField = document.getElementById('input-field')
 const category = document.getElementById('category')
-const search_bar = document.getElementById('search-bar')
+const searchBar = document.getElementById('search-bar')
+const gridLoading = document.getElementById('grid-loading')
 
 
-function add_grid(parentElem, attraction){
+function add_grid(parentElem, attraction, imgArray, gridArray){
     let grid = document.createElement('a')
+    grid.style.display = "none"
     grid.className = "per-grid"
     grid.setAttribute('href', `/attraction/${attraction['id']}`)
     parentElem.appendChild(grid)
@@ -23,6 +25,7 @@ function add_grid(parentElem, attraction){
     img.src = attraction['images'][0]
     img.className = "grid-img"
     grid_pic.appendChild(img)
+    imgArray.push(img)
 
     let name = document.createElement('div')
     name.className = "grid-name"
@@ -48,6 +51,8 @@ function add_grid(parentElem, attraction){
     cat.textContent = attraction['category']
     cat.className = "grid-cat"
     grid_info.appendChild(cat)
+
+    gridArray.push(grid)
 }
 
 
@@ -56,6 +61,43 @@ function add_category(parentElem, text){
     cat_grid.className = "category-grid"
     cat_grid.textContent = text
     parentElem.appendChild(cat_grid)
+}
+
+
+function pageLoad(imgs){
+    const total = imgs.length
+    let count = 0
+
+    imgs.forEach(img => {
+        img.addEventListener('load', () => {
+            count++
+            if (count == total){
+                loadingSection.style.display = "none"
+                return
+            }
+        })
+    })
+}
+
+
+function loadMore(imgs, grids){
+    const total = imgs.length
+    let count = 0
+
+    imgs.forEach(img => {
+        img.addEventListener('load', () => {
+            count++
+            if (count == total){
+                gridLoading.style.display = "none"
+
+                grids.forEach(grid => {
+                    grid.style.display = "flex"
+                })
+
+                return
+            }
+        })
+    })
 }
 
 
@@ -71,9 +113,18 @@ async function loadAttraction(){
 
         let grid_section = document.querySelector('.grid-container')
 
+        let imgArray = []
+        let gridArray = []
+
         attractions.forEach(attraction => {
-            add_grid(grid_section, attraction)
+            add_grid(grid_section, attraction, imgArray, gridArray)
         })
+
+        gridArray.forEach(grid => {
+            grid.style.display = "flex"
+        })
+
+        pageLoad(imgArray)
     }
     catch(error) {
         console.log(error)
@@ -101,16 +152,14 @@ async function loadCategory(){
     catch(error) {
         console.log(error)
     }
-    
-    loadingSection.style.display = "none" 
 }
 
 
 loadCategory()
 
 
-input_field.addEventListener('click', function(){
-    input_field.focus()
+inputField.addEventListener('click', function(){
+    inputField.focus()
     category.style.visibility = 'visible'
 
     let cats = document.querySelectorAll('.category-grid')
@@ -130,7 +179,7 @@ input_field.addEventListener('click', function(){
             })
 
             cat.style.backgroundColor = '#E8E8E8'
-            input_field.value = cat.textContent
+            inputField.value = cat.textContent
         })
     })
 })
@@ -138,7 +187,7 @@ input_field.addEventListener('click', function(){
 
 // handle events click outside of input-field
 document.addEventListener('click', function click_outside_input_field(e){
-    if (!input_field.contains(e.target)){
+    if (!inputField.contains(e.target)){
         category.style.visibility = 'hidden'
     }
 })
@@ -146,6 +195,8 @@ document.addEventListener('click', function click_outside_input_field(e){
 
 async function searchKeyword(keyword){
     try {
+        gridLoading.style.display = "flex" 
+
         const res = await fetch(`/api/attractions?page=0&keyword=${keyword}`)
         const data = await res.json()
 
@@ -160,12 +211,18 @@ async function searchKeyword(keyword){
         next_page = data.nextPage
 
         if (attractions.length === 0){
+            gridLoading.style.display = "none" 
             grid_section.innerHTML = "查無此景點"
         }
         else {
+            imgArray = []
+            gridArray = []
+
             attractions.forEach(attraction => {
-                add_grid(grid_section, attraction)
+                add_grid(grid_section, attraction, imgArray, gridArray)
             })
+
+            loadMore(imgArray, gridArray)
         }
     }
     catch(error) {
@@ -174,10 +231,10 @@ async function searchKeyword(keyword){
 }
 
 
-search_bar.addEventListener('submit', async event => {
+searchBar.addEventListener('submit', async event => {
     event.preventDefault()
 
-    keyword = input_field.value
+    keyword = inputField.value
     
     searchKeyword(keyword)
 })
@@ -185,25 +242,35 @@ search_bar.addEventListener('submit', async event => {
 
 // infinite scroll using intersection observer
 const options = {
-  threshold: 0.6
-};
+    threshold: 0.6
+}
 
 
 async function loadNextPage(){
     try {
+        isLoading = true
+
+        gridLoading.style.display = "flex"
+
         const res = await fetch(`/api/attractions?page=${next_page}&keyword=${keyword}`)
         const data = await res.json()
 
         const attractions = data.data
                         
-        console.log(next_page)
         next_page = data.nextPage
 
         let grid_section = document.querySelector('.grid-container')
 
+        imgArray = []
+        gridArray = []
+
         attractions.forEach(attraction => {
-            add_grid(grid_section, attraction)
+            add_grid(grid_section, attraction, imgArray, gridArray)
         })
+
+        loadMore(imgArray, gridArray)
+
+        isLoading = false
     }
     catch(error) {
         console.log(error)
@@ -215,11 +282,7 @@ const callback = (entries, observer) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             if (next_page != null && isLoading == false){
-                isLoading = true
-  
                 loadNextPage()
-
-                isLoading = false
             }
         }
     })
