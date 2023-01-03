@@ -52,61 +52,6 @@ body {
     position: relative;
 }
 
-.tooltip {
-    position: absolute;
-    width: 90px;
-    height: 80px;
-    background-color: white;
-    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgb(219, 219, 219);
-    border-radius: 1px;
-
-    top: 42px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    visibility: hidden;
-}
-
-.triangle-up {
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid rgb(219, 219, 219);
-
-    position: absolute;
-    left: 35px;
-    bottom: 78px;
-}
-
-.inner-triangle {
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right:8px solid transparent;
-    border-bottom: 8px solid white;
-
-    position: absolute;
-    left: -8px;
-    bottom: -10px;
-}
-
-.tooltip a {
-    font-weight: 500;
-    font-size: 16px;
-    color: rgba(102, 102, 102, 1);
-    text-decoration: none;
-    padding: 5px;
-}
-
-.tooltip a:hover {
-    text-decoration: underline;
-}
-
 .nav-button {
     border-style: hidden;
     background-color: white;
@@ -118,6 +63,10 @@ body {
     line-height: 13px;
     cursor: pointer;
     text-decoration: none;
+}
+
+.nav-button:hover {
+    color: #448899;
 }
 
 #overlay-trigger,

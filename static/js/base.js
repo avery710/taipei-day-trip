@@ -5,14 +5,14 @@ const signupSection = document.getElementById('signup')
 const promptSection = document.getElementById('prompt-section')
 const overlaySection = document.querySelector('.overlay')
 const closeButtons = document.querySelectorAll('.close-button')
-const overlayTrigger = document.getElementById('overlay-trigger')
-const logout = document.getElementById('logout')
 const loginForm = document.getElementById('login-form')
 const signupForm = document.getElementById('signup-form')
-const toBookingPage = document.getElementById('to-booking-page')
 const prompt = document.getElementById('message-content')
 const loadingSection = document.getElementById('page-loading')
-const tooltip = document.querySelector('.tooltip')
+const navRightSection = document.getElementById('nav-right')
+const overlayTrigger = document.querySelector('.overlay-trigger')
+const logout = document.querySelector('.logout')
+const toBookingPage = document.querySelector('.to-booking-page')
 
 
 // check whether the user is login
@@ -26,15 +26,14 @@ async function isLogin(){
         let user_data = user.data
     
         if (user_data == null){
-            overlayTrigger.style.display = "inline"
             logout.style.display = "none"
+            toHistoryPage.style.display = "none"
 
             toBookingPage.addEventListener('click', () => {
                 overlaySection.style.display = 'flex'
             })
         }
         else {
-            logout.style.display = "inline-block"
             overlayTrigger.style.display = "none"
             
             toBookingPage.addEventListener('click', () => {
@@ -185,18 +184,3 @@ function showPrompt(message){
 
     prompt.textContent = message
 }
-
-
-toBookingPage.addEventListener('mouseover', () => {
-    localStorageName = localStorage.getItem("name")
-
-    if (localStorageName){
-        tooltip.style.visibility = "visible"
-    }
-})
-
-document.addEventListener('mouseover', event => {
-    if (!toBookingPage.contains(event.target) && !tooltip.contains(event.target)){
-        tooltip.style.visibility = "hidden"
-    }
-})
