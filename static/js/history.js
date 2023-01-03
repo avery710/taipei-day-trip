@@ -44,10 +44,10 @@ async function fetchOrders(){
                     }
 
                     if (order.price == 2000){
-                        div.querySelector('.order-cost').textContent = "NT$2000"
+                        div.querySelector('.order-cost').textContent = "TWD 2000"
                     }
                     else {
-                        div.querySelector('.order-cost').textContent = "NT$2500"
+                        div.querySelector('.order-cost').textContent = "TWD 2500"
                     }
 
                     div.querySelector('.order-img-tag').src = order.images[0]

@@ -37,17 +37,6 @@
     align-items: center;
 }
 
-hr {
-    border: 0;
-    clear: both;
-    display: block;             
-    background-color: #E8E8E8;
-    height: 1px;
-
-    width: 90%;
-    max-width: 1000px;
-}
-
 #order-headline {
     margin-top: 40px;
     margin-bottom: 30px;
@@ -68,13 +57,46 @@ hr {
 .order-content {
     max-width: 1000px;
     width: 93%;
-    display: grid;
-    gap: 22px;
     cursor: pointer;
     text-decoration: none;
 
-    padding-top: 40px;
-    padding-bottom: 40px;
+    padding-bottom: 30px;
+
+    margin-bottom: 20px;
+
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    transition: all 0.15s ease-in-out;
+
+    border: 1px solid #ededed;
+}
+
+.order-content:hover{
+    box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1);
+}
+
+.order-upper-section {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ededed;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.thin-text {
+    font-weight: 400;
+    font-size: 12px;
+    color: #bdbdbd;
+
+    display: inline-block;
+}
+
+.order-lower-section {
+    padding-top: 20px;
+    width: 100%;
+    display: grid;
+    gap: 22px;
     padding-left: 20px;
     padding-right: 20px;
 }
@@ -90,6 +112,7 @@ hr {
     width: 100%;
     object-fit: cover;
     object-position: top center;
+    border-radius: 5px;
 }
 
 .order-info {
@@ -102,9 +125,8 @@ hr {
     font-size: 16px;
     line-height: 13px;
     color: #448899;
-
     height: 24px;
-    margin-bottom: 20px;
+    margin-bottom:13px;
 
     display: flex;
     align-items: center;
@@ -112,7 +134,18 @@ hr {
 
 .order-detail {
     height: 24px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+
+    display: flex;
+    align-items: center;
+
+    margin-right: 10px;
+}
+
+.icon {
+    height: 16px;
+    width: 16px;
+    margin-right: 5px;
 }
 
 .inline-text {
@@ -121,39 +154,34 @@ hr {
     line-height: 18px;
     color: #666666;
 
-    display: inline-block;
+    height: 24px;
+    margin-bottom: 7px;
 }
 
-.order-expense {
+.thin-font {
+    display: inline-block;
+    font-weight: 400;
+    font-size: 14px;
+    color: #666666;
+}
+
+.order-cost {
     position: absolute;
     cursor: pointer;
-}
-
-.order-content:hover{
-    background-color: #f5f5f5;
+    color: #448899;
+    right: 0;
+    bottom: 0;
 }
 
 @media (min-width: 360px) and (max-width: 900px) {
-    .order-content {
+    .order-lower-section {
         grid-template-columns: 1fr;
-        padding-left: 0;
-        padding-right: 0;
-    }
-
-    .order-expense {
-        top: 0;
-        right: 0;
     }
     
 }
 
 @media (min-width: 900px) and (max-width: 2000px) {
-    .order-content {
-        grid-template-columns: 240px 1fr;
-    }
-
-    .order-expense {
-        right: 0;
-        top: 40%;
+    .order-lower-section {
+        grid-template-columns: 180px 1fr;
     }
 }
