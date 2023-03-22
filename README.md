@@ -8,7 +8,6 @@
 - **Technique Overview : Flask, MySQL, AWS EC2, HTML, CSS, JavaScript, Python**
 ## Architecture
 - #### Applying MVC model, RESTful APIs
-- #### Integrated Third-party Payment System, TapPay SDK
   ![page-architecture](https://github.com/avery710/taipei-day-trip/blob/1c4a77e679df43b8788450c66b6df9bc6a15ee1e/static/img/README/architecture.jpg)
 ## Main Features
 - #### Infinite scroll
