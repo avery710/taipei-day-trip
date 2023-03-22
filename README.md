@@ -1,11 +1,17 @@
-# Taipei Day Trip
+# [Taipei Day Trip](http://52.69.53.123:3000)
 **An E-commerce Tourism Website that allows you to explore tourist attractions in Taipei and book sightseeing trips.**  
-  
-- **Link : http://52.69.53.123:3000**  
-  
-- **Account & Password for Testing : testtest@123.com / 12345678**  
-  
-- **Technique Overview : Flask, MySQL, AWS EC2, HTML, CSS, JavaScript, Python**
+## Technique Overview
+- #### Frontend
+  - HTML
+  - CSS
+  - JavaScript
+- #### Backend
+  - Framework : Python Flask
+  - Database : MySQL
+  - Cloud service : AWS EC2
+## Testing account
+- Email : testtest@123.com
+- Password : 12345678
 ## Architecture
 - #### Applying MVC model, RESTful APIs
   ![page-architecture](https://github.com/avery710/taipei-day-trip/blob/1c4a77e679df43b8788450c66b6df9bc6a15ee1e/static/img/README/architecture.jpg)
