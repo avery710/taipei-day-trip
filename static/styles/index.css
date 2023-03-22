@@ -80,7 +80,6 @@
 #input-field:focus {
     outline: none !important;
     border: 2px solid #448899;
-    /* box-shadow: 0 0 10px #448899; */
 }
 
 #search-bar button {
@@ -94,6 +93,10 @@
     display: inline;
 
     position: relative;
+}
+
+#search-bar button:hover {
+    background-color: #29788b;
 }
 
 #search-bar button img {
@@ -150,7 +153,9 @@
     margin-bottom: 104px;
 
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 
     flex: 1; 
 }
@@ -189,6 +194,12 @@
     height: 100%;
     object-fit: cover;
     object-position: top center;
+
+    transition: transform 0.5s ease-in-out;
+}
+
+.per-grid:hover .grid-img {
+    transform: scale(1.2);
 }
 
 .grid-name {
@@ -257,3 +268,12 @@
         width: 400px;
     }
 } 
+
+#grid-loading {
+    width: 100%;
+    height: 150px;
+
+    position: relative;
+
+    display: none;
+}

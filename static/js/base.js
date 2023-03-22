@@ -1,17 +1,19 @@
-const login_prompt = document.getElementById('login-prompt')
-const signup_prompt = document.getElementById('signup-prompt')
-const login_section = document.getElementById('login')
-const signup_section = document.getElementById('signup')
-const prompt_section = document.getElementById('prompt-section')
-const overlay_section = document.querySelector('.overlay')
-const close_buttons = document.querySelectorAll('.close-button')
-const overlay_trigger = document.getElementById('overlay-trigger')
-const logout = document.getElementById('logout')
-const login_form = document.getElementById('login-form')
-const signup_form = document.getElementById('signup-form')
-const toBookingPage = document.getElementById('to-booking-page')
+const loginPrompt = document.getElementById('login-prompt')
+const signupPrompt = document.getElementById('signup-prompt')
+const loginSection = document.getElementById('login')
+const signupSection = document.getElementById('signup')
+const promptSection = document.getElementById('prompt-section')
+const overlaySection = document.querySelector('.overlay')
+const closeButtons = document.querySelectorAll('.close-button')
+const loginForm = document.getElementById('login-form')
+const signupForm = document.getElementById('signup-form')
 const prompt = document.getElementById('message-content')
-const loadingSection = document.querySelector('.loading-section')
+const loadingSection = document.getElementById('page-loading')
+const navRightSection = document.getElementById('nav-right')
+const overlayTrigger = document.querySelector('.overlay-trigger')
+const logout = document.querySelector('.logout')
+const toBookingPage = document.querySelector('.to-booking-page')
+const toHistoryPage = document.querySelector('.to-history-page')
 
 
 // check whether the user is login
@@ -25,16 +27,21 @@ async function isLogin(){
         let user_data = user.data
     
         if (user_data == null){
-            overlay_trigger.style.display = "inline"
             logout.style.display = "none"
+            toHistoryPage.style.display = "none"
 
             toBookingPage.addEventListener('click', () => {
-                overlay_section.style.display = 'flex'
+                overlaySection.style.display = 'flex'
             })
         }
         else {
-            logout.style.display = "inline-block"
-            overlay_trigger.style.display = "none"
+            overlayTrigger.style.display = "none"
+
+            if (window.location.pathname === "/booking"){
+                toBookingPage.style.display = "none"
+                toHistoryPage.style.display = "inline-block"
+                console.log("hi")
+            }
             
             toBookingPage.addEventListener('click', () => {
                 window.location.href = '/booking'
@@ -53,31 +60,31 @@ async function isLogin(){
 isLogin()
 
 
-login_prompt.addEventListener('click', e => {
-    login_section.style.display = 'none'
-    signup_section.style.display = 'flex'
+loginPrompt.addEventListener('click', e => {
+    loginSection.style.display = 'none'
+    signupSection.style.display = 'flex'
 })
 
 
-signup_prompt.addEventListener('click', e => {
-    signup_section.style.display = 'none'
-    login_section.style.display = 'flex'
+signupPrompt.addEventListener('click', e => {
+    signupSection.style.display = 'none'
+    loginSection.style.display = 'flex'
 })
 
 
-close_buttons.forEach(button => {
+closeButtons.forEach(button => {
     button.addEventListener('click', e => {
-        overlay_section.style.display = 'none'
+        overlaySection.style.display = 'none'
     })
 })
 
 
-overlay_trigger.addEventListener('click', e => {
-    overlay_section.style.display = 'flex'
+overlayTrigger.addEventListener('click', e => {
+    overlaySection.style.display = 'flex'
 })
 
 
-login_form.addEventListener('submit', async event => {
+loginForm.addEventListener('submit', async event => {
     event.preventDefault();
 
     const email = document.getElementById('login-email').value
@@ -110,7 +117,7 @@ login_form.addEventListener('submit', async event => {
 })
 
 
-async function fetchSignup(error_message){
+async function fetchSignup(error_message, formData){
     try {
         const res = await fetch('/api/user', {
             method: "POST",
@@ -133,7 +140,7 @@ async function fetchSignup(error_message){
 }
 
 
-signup_form.addEventListener('submit', event => {
+signupForm.addEventListener('submit', event => {
     event.preventDefault();
 
     const email = document.getElementById('signup-email').value
@@ -148,7 +155,7 @@ signup_form.addEventListener('submit', event => {
     formData.append('password', pw)
     formData.append('email', email)
 
-    fetchSignup(error_message)
+    fetchSignup(error_message, formData)
 })
 
 
@@ -177,10 +184,15 @@ logout.addEventListener('click', () => {
 
 
 function showPrompt(message){
-    overlay_section.style.display = 'flex'
-    signup_section.style.display = "none"
-    login_section.style.display = "none"
-    prompt_section.style.display = "flex"
+    overlaySection.style.display = 'flex'
+    signupSection.style.display = "none"
+    loginSection.style.display = "none"
+    promptSection.style.display = "flex"
 
     prompt.textContent = message
 }
+
+
+toHistoryPage.addEventListener('click', () => {
+    window.location.href = "/history"
+})

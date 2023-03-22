@@ -43,6 +43,7 @@ async function initPage(){
             if (jsonData.data == null){
                 bookingContent.style.display = "none"
                 noBooking.style.display = "flex"
+                loadingSection.style.display = "none" 
             }
             else {
                 // show attraction info
@@ -70,13 +71,16 @@ async function initPage(){
                 tripImg.src = jsonData.data.attraction.image
                 tripImg.className = "trip-img"
                 tripImgSection.appendChild(tripImg)
+
+                tripImg.addEventListener('load', () => {
+                    loadingSection.style.display = "none" 
+                })
             }
         }
         catch(error){
             console.log(error)
         }
     }
-    loadingSection.style.display = "none"  
 }
 
 

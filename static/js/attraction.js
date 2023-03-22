@@ -1,7 +1,7 @@
 let images = []
-const images_container = document.getElementById('images-container')
-const dots_container = document.getElementById('dots-container')
-const spot_name = document.getElementById('name')
+const imagesContainer = document.getElementById('images-container')
+const dotsContainer = document.getElementById('dots-container')
+const spotName = document.getElementById('name')
 const cat = document.getElementById('category')
 const mrt = document.getElementById('mrt')
 const description = document.getElementById('description')
@@ -9,6 +9,7 @@ const address = document.getElementById('address')
 const transport = document.getElementById('transport')
 const expense = document.getElementById('expense-result')
 const bookingButt = document.getElementById('start-booking')
+const dateInput = document.getElementById('date-input')
 
 
 let slideIndex = 1
@@ -56,14 +57,30 @@ function add_img(img_url){
     let image = document.createElement('img')
     image.src = img_url
     image.className = 'slide-img'
-    images_container.appendChild(image)
+    imagesContainer.appendChild(image)
 }
 
 
 function add_dot(){
     let dot = document.createElement('span')
     dot.className = 'dot'
-    dots_container.appendChild(dot)
+    dotsContainer.appendChild(dot)
+}
+
+function checkImgLoad(){
+    const imgs = document.querySelectorAll('.slide-img')
+    const total = imgs.length
+    let count = 0
+
+    imgs.forEach(img => {
+        img.addEventListener('load', event => {
+            count++
+            if (count == total){
+                loadingSection.style.display = "none"
+                return
+            }
+        })
+    })
 }
 
 
@@ -81,7 +98,7 @@ async function fetchAttraction(){
         else {
             let attraction = data['data']
 
-            spot_name.textContent = attraction['name']
+            spotName.textContent = attraction['name']
             cat.textContent = attraction['category']
             mrt.textContent = attraction['mrt']
             description.textContent = attraction['description']
@@ -93,6 +110,8 @@ async function fetchAttraction(){
                 add_img(url)
                 add_dot()
             })
+
+            checkImgLoad()
 
             let dots = document.querySelectorAll('.dot')
             for (let i = 0; i < images.length; i++){
@@ -108,8 +127,6 @@ async function fetchAttraction(){
     catch(error){
         console.log(error)
     }
-
-    loadingSection.style.display = "none" 
 }
 
 
@@ -140,7 +157,7 @@ bookingButt.addEventListener('click', async event => {
 
         if (user_data == null){
             //  if not login, then login first
-            overlay_section.style.display = 'flex'
+            overlaySection.style.display = 'flex'
         }
         else {
             // make new booking
@@ -191,3 +208,8 @@ bookingButt.addEventListener('click', async event => {
         console.log(error)
     }
 })
+
+
+let today = new Date();
+today = new Date(today.setDate(today.getDate() + 2)).toISOString().split('T')[0]
+dateInput.setAttribute('min', today)
