@@ -1,5 +1,7 @@
 # [Taipei Day Trip](http://52.69.53.123:3000)
 **An E-commerce Tourism Website that allows you to explore tourist attractions in Taipei and book sightseeing trips.**  
+  
+![index-overview](https://github.com/avery710/taipei-day-trip/blob/f6f45b23a6e84b44d5ed9829cc0a49f5db5c7318/static/img/README/index.jpg)
 ## Technique Overview
 - #### Frontend
   - HTML
