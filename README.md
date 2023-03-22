@@ -11,7 +11,7 @@
   - Framework : Python Flask
   - Database : MySQL
   - Cloud service : AWS EC2
-## Testing account
+## Testing Account
 - Email : testtest@123.com
 - Password : 12345678
 ## Architecture
