@@ -29,4 +29,5 @@
 - #### View history payment
   ![history-page](https://github.com/avery710/taipei-day-trip/blob/bff68a19bd31ba0991ab949035022c20ede0fa10/static/img/README/demo-history.jpg)
 ## Database schema
+- #### MySQL database
   ![db-schema](https://github.com/avery710/taipei-day-trip/blob/c9eb81bc40109df51563ba78e9ca83c74a7b76ec/static/img/README/db-schema.jpg)
